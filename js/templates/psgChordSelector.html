@@ -1,0 +1,11 @@
+<div class="btn-group chordOptions">
+	<button type="button" class="btn btn-success btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		{{chord.root}}{{chord.selectedMood.label}} - Fret:{{chord.chord.positions[chord.selectedPosition].fret}} <span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu">
+		<li ng-repeat="position in chord.chord.positions"><a ng-click="changeChordPosition($index)">{{position.fret}}</a></li>
+		<li role="separator" class="divider"></li>
+		<li><a ng-click="changeChordMood()">Make {{getMoodToggleText(chord.selectedMood).label}}</a></li>
+		<li><a ng-click="onDelete($chordIndex)">Delete</a></li>
+	</ul>
+</div>

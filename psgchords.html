@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+	<title>Painless Steel - Chords for E9 Pedal Steel</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/psgchords.css" />
+</head>
+
+<body ng-app="psgchordsApp" ng-controller="psgchordsController">
+
+
+	<nav class="navbar navbar-default navbar-static-top">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#">Painless Steel - Chords for E9 Pedal Steel</a>
+	    </div>
+
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav navbar-right">
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span> Preferences</a>
+	          <ul class="dropdown-menu">
+	            <li><a href="#">Action</a></li>
+	            <li><a href="#">Another action</a></li>
+	            <li><a href="#">Something else here</a></li>
+	            <li role="separator" class="divider"></li>
+	            <li><a href="#">Separated link</a></li>
+	          </ul>
+	        </li>
+	        <li class="dropdown">
+	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-question-sign"></span> Help</a>
+	        </li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+
+	<div class="container-fluid">
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <h3 class="panel-title">Chord Inspector</h3>
+            </div>
+
+            <div class="panel-body">
+				<div class="form-group">
+					<div class="btn-group" data-toggle="buttons">
+					  <label ng-repeat="mood in chordMoods" ng-click="onMoodSelected(mood)" class="btn btn-primary {{selectedMood.name == mood.name ? 'active' : ''}}">
+					    <input type="radio" name="mood"> {{mood.label}}
+					  </label>
+					</div>
+					<div id="chordList" class="btn-group" data-toggle="buttons">
+					  <label ng-repeat="chord in chordNames" ng-click="onChordSelected(chord)" class="btn btn-info {{selectedChord.name == chord.name ? 'active' : ''}}">
+					    <input type="radio" name="chord"> {{chord.label}}
+					  </label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 chordPosition" ng-repeat="position in selectedChord.positions">
+						<div class="well well-sm">
+							<div psg-chord-layout position="position"></div>
+
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <h3 class="panel-title">Chord Charter</h3>
+            </div>
+
+            <div class="panel-body">
+				<div class="form-group">
+					<div class="btn-group" data-toggle="buttons">
+					  <label ng-repeat="mood in chordMoods" ng-click="onChartMoodSelected(mood)" class="btn btn-primary {{chartSelectedMood.name == mood.name ? 'active' : ''}}">
+					    <input type="radio" name="chartMood"> {{mood.label}}
+					  </label>
+					</div>
+					<div id="chordSelector" class="btn-group">
+						<button ng-repeat="chord in chordNames" type="button" psg-draggable dragtype="copy" class="btn btn-info">{{chord.label}}</button>
+					</div>
+				</div>
+				<div id="dropchords" on-drop="chordDropped(dragData)" class="row" psg-droppable dropIndicatorClass="dropme" dropTargetClass="droptarget">
+
+					<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 chordChart" ng-repeat="cc in chordChart track by $index">
+						<div id="{{$index}}" class="well well-md" psg-droppable dropIndicatorClass="dropme2" dropTargetClass="droptarget" on-drop="chordDropped(dragData, dropEl)" psg-draggable dragtype="move" chordName="{{cc.root}}">
+							<div psg-chord-selector chord="cc" moods="chordMoods" majors="majorChords" minors="minorChords" on-delete="deleteChordFromChart(scope.chordIndex)" chord-index="$index"></div>
+							<div psg-chord-layout position="cc.chord.positions[cc.selectedPosition]"></div>
+						</div>
+					</div>
+
+					<div class="col-lg-12" ng-hide="chordChart.length">
+						<div class="well well-md">Drag notes from above to assemble a chord progression.</div>
+					</div>
+
+				</div>
+            </div>
+        </div>
+
+	</div>
+
+	<script type='text/javascript' src="js/jquery-1.11.3.min.js"></script>
+	<script type='text/javascript' src="js/angular.min.js"></script>
+	<script type='text/javascript' src="js/bootstrap.min.js"></script>
+	<script type='text/javascript' src="js/psgchords.js"></script>
+
+</body>
+</html>
