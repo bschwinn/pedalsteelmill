@@ -24,7 +24,7 @@ angular.module('psgchords.controllers', []).controller('psgchordsController', ['
 	];
 
     // utility routines for populating the chords "DB"
-	createAllMajorChords = function(noteOffset) {
+	createAllMajorChords = function() {
 		var chordMap = {}
 		for ( var i=0; i<$scope.chordNames.length; i++ ) {
 			var chordName = $scope.chordNames[i].name;
@@ -32,7 +32,7 @@ angular.module('psgchords.controllers', []).controller('psgchordsController', ['
 		}
 		return chordMap;
 	}
-	createAllMinorChords = function(noteOffset) {
+	createAllMinorChords = function() {
 		var chordMap = {}
 		for ( var i=0; i<$scope.chordNames.length; i++ ) {
 			var chordName = $scope.chordNames[i].name;
@@ -42,21 +42,39 @@ angular.module('psgchords.controllers', []).controller('psgchordsController', ['
 	}
 	createMajorChord = function(note, noteOffset) {
 		var positions = [];
-		positions[positions.length] = createMajorPosition(note, noteOffset, [], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
-		positions[positions.length] = createMajorPosition(note, 3+noteOffset, ["A"], ["LKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
-		positions[positions.length] = createMajorPosition(note, 5+noteOffset, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
-		positions[positions.length] = createMajorPosition(note, 7+noteOffset, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+		positions[positions.length] = createChordPosition(note, noteOffset, [], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+		positions[positions.length] = createChordPosition(note, 3+noteOffset, ["A"], ["LKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+
+		if ( noteOffset > 6 ) {
+			positions.unshift(createChordPosition(note, (7+noteOffset)-12, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
+			positions.unshift(createChordPosition(note, (5+noteOffset)-12, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
+		} else if ( noteOffset > 4 ) {
+			positions[positions.length] = createChordPosition(note, 5+noteOffset, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+			positions.unshift(createChordPosition(note, (7+noteOffset)-12, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
+		} else {
+			positions[positions.length] = createChordPosition(note, 5+noteOffset, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+			positions[positions.length] = createChordPosition(note, 7+noteOffset, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+		}
+
 		return { "name" : $scope.chordNames[noteOffset].name, "type" : "maj", "positions": positions };
 	}
 	createMinorChord = function(note, noteOffset) {
 		var positions = [];
-		positions[positions.length] = createMajorPosition(note, noteOffset, ["B"], ["RKL"], [0, 0, 0, 1, 1, 1, 0, 1, 0, 1]);
-		positions[positions.length] = createMajorPosition(note, 3+noteOffset, ["A"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
-		positions[positions.length] = createMajorPosition(note, 7+noteOffset, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
-		positions[positions.length] = createMajorPosition(note, 10+noteOffset, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]);
+		positions[positions.length] = createChordPosition(note, noteOffset, ["B"], ["RKL"], [0, 0, 0, 1, 1, 1, 0, 1, 0, 1]);
+		positions[positions.length] = createChordPosition(note, 3+noteOffset, ["A"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+		if ( noteOffset > 4 ) {
+			positions.unshift(createChordPosition(note, (10+noteOffset)-12, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]));
+			positions.unshift(createChordPosition(note, (7+noteOffset)-12, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
+		} else if ( noteOffset > 1 ) {
+			positions[positions.length] = createChordPosition(note, 7+noteOffset, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+			positions.unshift(createChordPosition(note, (10+noteOffset)-12, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]));
+		} else {
+			positions[positions.length] = createChordPosition(note, 7+noteOffset, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+			positions[positions.length] = createChordPosition(note, 10+noteOffset, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]);
+		}
 		return { "name" : $scope.chordNames[noteOffset].name, "type" : "min", "positions": positions };
 	}
-	createMajorPosition = function(note, noteOffset, pedals, levers, stringMask) {
+	createChordPosition = function(note, noteOffset, pedals, levers, stringMask) {
 		var strings = new Array();
 		for( var i=0; i<stringMask.length; i++ ) {
 			strings[strings.length] = { note: findNoteForOffset(noteOffset, i, pedals, levers), enabled: stringMask[i] };
@@ -100,13 +118,6 @@ angular.module('psgchords.controllers', []).controller('psgchordsController', ['
 		}
 		return $scope.chordNames[(offset + stringNoteOffsets[string]) % 12].name;
 	}
-	updateSelectedChord = function(chord) {
-		if ( $scope.selectedMood.name == "maj") {
-			$scope.selectedChord = $scope.majorChords[chord.name];
-		} else {
-			$scope.selectedChord = $scope.minorChords[chord.name];
-		}
-	}
 
 	// populate major and minor chord details
 	$scope.majorChords = createAllMajorChords();
@@ -121,6 +132,13 @@ angular.module('psgchords.controllers', []).controller('psgchordsController', ['
     $scope.chordChart = [];  // [ { root : "A", chord : $scope.majorChords["A"], selectedPosition: 0, selectedMood: $scope.chordMoods[0] } ]
 
     // selection listeners
+	updateSelectedChord = function(chord) {
+		if ( $scope.selectedMood.name == "maj") {
+			$scope.selectedChord = $scope.majorChords[chord.name];
+		} else {
+			$scope.selectedChord = $scope.minorChords[chord.name];
+		}
+	}
 	$scope.onChordSelected = function(chord) {
 		updateSelectedChord(chord);
 	}
