@@ -6,9 +6,10 @@ A pedal steel chord dictionary and chord charting tool that currently supports t
 3 pedal and 5 lever E9 pedal steel setup.
 
 ## What it does
-It also supports the notion of a chord chart.  The user can add individual chord positions
-to the chart to match a chord progression(s).  The chart can be fully edited and re-ordered - 
-each chord can have it's neck position changed in place even.
+It allows the user to select a major or minor chord by name and see all the positions of that chord up and down the neck.
+It also supports the notion of a chord chart where the user can add individual chord positions
+to the chart to make a chord progression.  The chart can also be fully edited/re-ordered and
+each chord can have it's neck position changed in place - this allows for you go econmize your lateral movement.
 
 ## Where it's going
 Hoping to add these features:
