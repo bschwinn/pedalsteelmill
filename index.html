@@ -4,6 +4,10 @@
 	<title>PedalSteelMill - Chords for E9 Pedal Steel</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="css/psgchords.css" />
+	<script type='text/javascript' src="js/jquery-1.11.3.min.js"></script>
+	<script type='text/javascript' src="js/bootstrap.min.js"></script>
+	<script type='text/javascript' src="js/psmlib.js"></script>
+	<script type='text/javascript' src="js/psm.js"></script>
 </head>
 
 <body ng-app="psgchordsApp" ng-controller="psgchordsController">
@@ -47,73 +51,125 @@
         <div class="panel panel-default">
 
             <div class="panel-heading">
-                <h3 class="panel-title">Chord Inspector</h3>
+                <h3 class="panel-title">Chord Positions</h3>
             </div>
 
             <div class="panel-body">
 				<div class="form-group">
-					<div class="btn-group" data-toggle="buttons">
-					  <label ng-repeat="mood in chordMoods" ng-click="onMoodSelected(mood)" class="btn btn-primary {{selectedMood.name == mood.name ? 'active' : ''}}">
-					    <input type="radio" name="mood"> {{mood.label}}
-					  </label>
-					</div>
-					<div id="chordList" class="btn-group" data-toggle="buttons">
-					  <label ng-repeat="chord in chordNames" ng-click="onChordSelected(chord)" class="btn btn-info {{selectedChord.name == chord.name ? 'active' : ''}}">
-					    <input type="radio" name="chord"> {{chord.label}}
-					  </label>
-					</div>
+					<div id="moodSelector" class="btn-group" data-toggle="buttons"></div>
+					<div id="chordSelector" class="btn-group" data-toggle="buttons"></div>
 				</div>
-				<div class="row">
-					<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 chordPosition" ng-repeat="position in selectedChord.positions">
-						<div class="well well-sm">
-							<div psg-chord-layout position="position"></div>
-
-						</div>
-					</div>
-				</div>
+				<div id="chordPositions" class="row"></div>
             </div>
         </div>
 
         <div class="panel panel-default">
 
             <div class="panel-heading">
-                <h3 class="panel-title">Chord Charter</h3>
+                <h3 class="panel-title">Chord Chart</h3>
             </div>
 
             <div class="panel-body">
 				<div class="form-group">
-					<div class="btn-group" data-toggle="buttons">
-					  <label ng-repeat="mood in chordMoods" ng-click="onChartMoodSelected(mood)" class="btn btn-primary {{chartSelectedMood.name == mood.name ? 'active' : ''}}">
-					    <input type="radio" name="chartMood"> {{mood.label}}
-					  </label>
-					</div>
-					<div id="chordSelector" class="btn-group">
-						<button ng-repeat="chord in chordNames" type="button" psg-draggable dragtype="copy" class="btn btn-info">{{chord.label}}</button>
-					</div>
+					<div id="chartMoodSelector" class="btn-group" data-toggle="buttons"></div>
+					<div id="chartChordSelector" class="btn-group"></div>
 				</div>
-				<div id="dropchords" on-drop="chordDropped(dragData)" class="row" psg-droppable dropIndicatorClass="dropme" dropTargetClass="droptarget">
-
-					<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 chordChart" ng-repeat="cc in chordChart track by $index">
-						<div id="{{$index}}" class="well well-md" psg-droppable dropIndicatorClass="dropme2" dropTargetClass="droptarget" on-drop="chordDropped(dragData, dropEl)" psg-draggable dragtype="move" chordName="{{cc.root}}">
-							<div psg-chord-selector chord="cc" moods="chordMoods" majors="majorChords" minors="minorChords" on-delete="deleteChordFromChart(scope.chordIndex)" chord-index="$index"></div>
-							<div psg-chord-layout position="cc.chord.positions[cc.selectedPosition]"></div>
-						</div>
-					</div>
-
-					<div class="col-lg-12" ng-hide="chordChart.length">
+				<div id="chordChart" class="row">
+					<div id="chordChartEmpty" class="col-lg-12">
 						<div class="well well-md">Drag notes from above to assemble a chord progression.</div>
 					</div>
-
 				</div>
             </div>
         </div>
 
 	</div>
 
-	<script type='text/javascript' src="js/jquery-1.11.3.min.js"></script>
-	<script type='text/javascript' src="js/angular.min.js"></script>
-	<script type='text/javascript' src="js/bootstrap.min.js"></script>
-	<script type='text/javascript' src="js/psgchords.js"></script>
+	<!-- major/minor selector -->
+	<template id="tmplMoodSelector">
+	  <label class="btn btn-primary">
+	    <input type="radio" name="mood"><span></span>
+	  </label>
+	</template>
+	<!-- chordname selector -->
+	<template id="tmplChordSelector">
+	  <label class="btn btn-info">
+	    <input type="radio" name="chord"><span></span>
+	  </label>
+	</template>
+	<!-- major/minor selector for chord chart -->
+	<template id="tmplChartMoodSelector">
+	  <label class="btn btn-primary">
+	    <input type="radio" name="chartMood"><span></span>
+	  </label>
+	</template>
+	<!-- chordname buttons for chord chart -->
+	<template id="tmplChartChordSelector">
+		<button type="button" dragtype="copy" class="btn btn-info"><span></span></button>
+	</template>
+	<!-- chord positions template, neck w/ guitar pedals and levers for each chord position -->
+	<template id="tmplChordPositions">
+		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 chordPosition">
+			<div class="well well-sm">
+				<div class="chordDetail">
+					<!-- chord detail template goes here -->
+				</div>
+			</div>
+		</div>
+	</template>
+	<!-- chord chart template, editor control + neck w/ guitar pedals and levers for each chord position in the chart -->
+	<template id="tmplChordChart">
+		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 chordChart">
+			<div class="well well-md chordChartWellDrop" dragtype="move">
+				<div class="chordChartSelector" psg-chord-selector on-delete="deleteChordFromChart(scope.chordIndex)" chord-index="$index"></div>
+				<div class="chordChartDetail"></div>
+			</div>
+		</div>
+	</template>
+	<!-- neck detail template -->
+	<template id="tmplChordDetail">
+		<div class="fretMarker"></div>
+		<div class="guitarNeck">
+			<!-- neck detail template goes here -->
+		</div>
+		<div class="guitarBody"></div>
+		<div class="guitarLevers">
+			<div class="lever leftkneeleft"></div>
+			<div class="leverup leftkneeup"></div>
+			<div class="lever leftkneeright"></div>
+			<div class="lever spacer"></div>
+			<div class="lever rightkneeleft"></div>
+			<div class="leverup notinstalled"></div>
+			<div class="lever rightkneeright"></div>
+		</div>
+		<div class="guitarPedals clearfix">
+			<div class="pedalA text-center">A</div>
+			<div class="pedalB text-center">B</div>
+			<div class="pedalC text-center">C</div>
+		</div>
+	</template>
+	<!-- neck detail template -->
+	<template id="tmplChordDetailNeck">
+		<div class="string row">
+			<div class="label pull-left {{(position.strings[n].enabled) ? '' : 'disabled'}}"><span></span></div>
+			<div class="left pull-left {{(position.strings[n].enabled) ? '' : 'disabled'}}"></div>
+			<div class="mid pull-left {{(position.strings[n].enabled) ? '' : 'disabled'}}"></div>
+			<div class="right pull-left {{(position.strings[n].enabled) ? '' : 'disabled'}}"></div>
+		</div>
+	</template>
+	<!-- chord editor drop down -->
+	<template id="tmplChordChartEditor">
+		<div class="btn-group chordOptions">
+			<button type="button" class="btn btn-success btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<span class="chordEditorLabel"></span> 
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li role="separator" class="divider"></li>
+				<li class="chordChartMoodToggle"><a>Make {{getMoodToggleText(chord.selectedMood).label}}</a></li>
+				<li class="chordChartDelete"><a>Delete</a></li>
+			</ul>
+		</div>
+	</template>
 
 </body>
 </html>
