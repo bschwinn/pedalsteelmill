@@ -30,16 +30,21 @@ class ChordPositions {
 }
 
 class ChordChart {
-	constructor(chords, domId, templateId, noteDropped) {
+	constructor(moods, chords, domId, templateId, noteDropped, positionChanged, moodChanged, chordDeleted) {
 		this.domId = domId;
 		this.templateId = templateId;
+		this.moods = moods;
 		this.chords = chords;
 		this.noteDropped = noteDropped;
-		this.detailPath = '.chordDetail';
-		this.dragPath = '.chordWellDrop';
-		this.dropPath = '.chordWellDrop';
+		this.positionChanged = positionChanged;
+		this.moodChanged = moodChanged;
+		this.chordDeleted = chordDeleted;
+		this.detailPath = '.chordChartDetail';
+		this.dragPath = '.chordChartWellDrop';
+		this.dropPath = '.chordChartWellDrop';
 		this.dropClass = 'dropme';
 		this.dropClassMove = 'dropme2';
+		this.rendered = false;
 	}
 
 	render(skipBind) {
@@ -54,19 +59,36 @@ class ChordChart {
 		    var tmpl = document.querySelector(this.templateId);
 			var clone = document.importNode(tmpl.content, true);
 			var clone$ = $(clone);
+			// chord position and editor
 			var chordPos = new ChordPosition(chordData.chord.positions[chordData.selectedPosition]);
 			var dclone$ = chordPos.parseTemplate();
+			var chordEdit = new ChordChartEditor(this.moods, i, chordData, this.positionChanged, this.moodChanged, this.chordDeleted);
+			var eclone$ = chordEdit.parseTemplate();
 			// append err thang
 			let dragger = clone$.find(this.dragPath);
 			dragger.attr('position', i);
+			clone$.find(this.detailPath).append(eclone$);
 			clone$.find(this.detailPath).append(dclone$);
 			this.bindDragHandlers(chordData, dragger);
 			this.bindDropHandlers(dragger, dragger.attr('id'), this.dropClassMove);
 			mainElem.append(clone$);
 		}
-		if ( skipBind !== true ) {
+		if ( !this.rendered ) {
 			this.bindDropHandlers(mainElem, mainElem.attr('id'), this.dropClass);
+		    window.addEventListener("PSM-DRAG-START", function () {
+		        mainElem.addClass('droptarget');
+		    });
+
+		    window.addEventListener("PSM-DRAG-END", function () {
+		        mainElem.removeClass('droptarget');
+		        mainElem.removeClass(that.dropClass);
+		    });
+		    window.addEventListener("PSM-DROPPED", function () {
+		        mainElem.removeClass('droptarget');
+		        mainElem.removeClass(that.dropClass);
+		    });
 		}
+		this.rendered = true;
 	}
 
 	update(chords) {
@@ -82,7 +104,6 @@ class ChordChart {
 	    el.bind("dragstart", function (e) {
 	    	var dragData = { root: chord.name, label: chord.label, dragType: "move", originalPosition: el.attr('position') };
 	        e.originalEvent.dataTransfer.setData('text', JSON.stringify(dragData));
-	        console.log("drag starting: " + JSON.stringify(dragData));
 	    	var event = new Event('PSM-DRAG-START');
 	        window.dispatchEvent(event);
 	    });
@@ -97,22 +118,23 @@ class ChordChart {
 		let that = this;
 		el.bind("dragover", function(e) {
 			if (e.preventDefault) e.preventDefault();
-			e.originalEvent.dataTransfer.dropEffect = 'move';
-	        return false;
+			if (e.stopPropagation) e.stopPropagation(); 
+			// e.originalEvent.dataTransfer.dropEffect = 'move';
+			return false;
 		});
 
 	    el.bind("dragenter", function (e) {
-	    	var tgtId = $(e.target).attr("id");
-	    	if ( tgtId == id ) {
-	            el.addClass(dropClass);
+	    	if ( that.isMyElement(el, $(e.target)) || that.isChildElement(el, $(e.target)) ) {
+		    	// console.log("dragenter on " + el.attr('class') + ", adding drop class: " + dropClass);
+				el.addClass(dropClass);
 	    	}
 	    });
 
 	    el.bind("dragleave", function (e) {
-	    	var tgtId = $(e.target).attr("id");
-	    	if ( tgtId == id ) {
-	            el.removeClass(dropClass);
-	    	}
+	    	if ( that.isMyElement(el, $(e.target)) || !that.isChildElement(el, $(e.target)) ) {
+				// console.log("dragleave on " + el.attr('class') + ", removing drop class: " + dropClass);
+				el.removeClass(dropClass);
+			}
 	    });
 
 	    el.bind("drop", function(e) {
@@ -121,16 +143,29 @@ class ChordChart {
 	        if (e.stopPropagation) e.stopPropagation(); 
 	        var data = JSON.parse(e.originalEvent.dataTransfer.getData("text"));
 	        that.noteDropped(data, el.attr('position'));
+	    	var event = new Event('PSM-DROPPED');
+	        window.dispatchEvent(event);
 	    });
+	}
 
-	    window.addEventListener("PSM-DRAG-START", function () {
-	        el.addClass('droptarget');
-	    });
+	isMyElement(el, tgt) {
+		if ( el.attr('id') == tgt.attr("id") ) {
+			return true;
+		}
+		return false;
+	}
 
-	    window.addEventListener("PSM-DRAG-END", function () {
-	        el.removeClass('droptarget');
-	        el.removeClass(dropClass);
-	    });
+	isChildElement(el, tgt) {
+		var parent = tgt;
+		while (parent != null) {
+			// console.log('checking child element: ' + parent.attr("id"));
+			if ( el.attr('id') == parent.attr("id") ) {
+				// console.log('child element found');
+				return true;
+			}
+			parent = parent.parent();
+		}
+		return false;
 	}
 }
 
@@ -164,7 +199,6 @@ class ChordChartSelector {
 	    el.bind("dragstart", function (e) {
 	    	var dragData = { root: chord.name, label: chord.label, dragType: "copy", mood: that.mood.name };
 	        e.originalEvent.dataTransfer.setData('text', JSON.stringify(dragData));
-	        console.log("drag starting: " + JSON.stringify(dragData));
 	    	var event = new Event('PSM-DRAG-START');
 	        window.dispatchEvent(event);
 	    });
@@ -249,6 +283,63 @@ class ChordPosition {
 				return true;
 			}
 		}		
+	}
+}
+
+// chord chart editor - allows changing positions, maj/min and deleting
+class ChordChartEditor {
+	constructor(moods, chartPosition, chordData, positionChanged, moodChanged, chordDeleted) {
+		this.moods = moods;
+		this.chartPosition = chartPosition;
+		this.chordData = chordData;
+		this.positionChanged = positionChanged;
+		this.moodChanged = moodChanged;
+		this.chordDeleted = chordDeleted;
+		this.template = '#tmplChordChartEditor';
+		this.labelPath = '.chordEditorLabel';
+		this.positionsPath = 'ul.dropdown-menu';
+		this.moodTogglePath = 'li.chordChartMoodToggle a';
+		this.deletePath = 'li.chordChartDelete a';
+	}
+
+	parseTemplate() {
+	    var dtmpl = document.querySelector(this.template);
+		var dclone = document.importNode(dtmpl.content, true);
+		var dclone$ = $(dclone);
+		var chordPos = this.chordData.chord.positions[this.chordData.selectedPosition];
+		dclone$.find(this.labelPath).text( chordPos.root + this.chordData.selectedMood.label + ' - Fret:' + chordPos.fret);
+		var list = dclone$.find(this.positionsPath);
+		let that = this;
+		for (let i=this.chordData.chord.positions.length-1; i>=0; i--) {
+			let pos = this.chordData.chord.positions[i];
+			var item = $('<li></li>');
+			var link = $('<a></a>').text(pos.fret);
+			item.append(link);
+			item.click(function() {
+				if (that.positionChanged != null) {
+					that.positionChanged(that.chartPosition, that.chordData, i);
+				}
+			});
+			list.prepend(item);
+		}
+		dclone$.find(this.deletePath).click(function() {
+			if (that.chordDeleted != null) {
+				that.chordDeleted(that.chartPosition, that.chordData);
+			}
+		});
+		dclone$.find(this.moodTogglePath).text('Make ' + this.getMoodToggleText(this.chordData.selectedMood)).click(function() {
+			if (that.moodChanged != null) {
+				that.moodChanged(that.chartPosition, that.chordData);
+			}
+		});
+		return dclone$;
+	}
+	getMoodToggleText(mood) {
+		if ( mood.name == "min" ) {
+			return this.moods[0].label;
+		} else {
+			return this.moods[1].label;
+		}
 	}
 }
 

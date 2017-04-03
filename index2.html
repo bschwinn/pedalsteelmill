@@ -74,8 +74,8 @@
 					<div id="chartMoodSelector" class="btn-group" data-toggle="buttons"></div>
 					<div id="chartChordSelector" class="btn-group"></div>
 				</div>
-				<div id="chordChart" on-drop="chordDropped(dragData)" class="row" dropIndicatorClass="dropme" dropTargetClass="droptarget">
-					<div class="col-lg-12">
+				<div id="chordChart" class="row">
+					<div id="chordChartEmpty" class="col-lg-12">
 						<div class="well well-md">Drag notes from above to assemble a chord progression.</div>
 					</div>
 				</div>
@@ -116,12 +116,12 @@
 			</div>
 		</div>
 	</template>
-	<!-- chord chart template, neck w/ guitar pedals and levers for each chord position in the chart -->
+	<!-- chord chart template, editor control + neck w/ guitar pedals and levers for each chord position in the chart -->
 	<template id="tmplChordChart">
 		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 chordChart">
-			<div class="well well-md chordWellDrop" dragtype="move">
-				<div psg-chord-selector on-delete="deleteChordFromChart(scope.chordIndex)" chord-index="$index"></div>
-				<div class="chordDetail"></div>
+			<div class="well well-md chordChartWellDrop" dragtype="move">
+				<div class="chordChartSelector" psg-chord-selector on-delete="deleteChordFromChart(scope.chordIndex)" chord-index="$index"></div>
+				<div class="chordChartDetail"></div>
 			</div>
 		</div>
 	</template>
@@ -154,6 +154,20 @@
 			<div class="left pull-left {{(position.strings[n].enabled) ? '' : 'disabled'}}"></div>
 			<div class="mid pull-left {{(position.strings[n].enabled) ? '' : 'disabled'}}"></div>
 			<div class="right pull-left {{(position.strings[n].enabled) ? '' : 'disabled'}}"></div>
+		</div>
+	</template>
+	<!-- chord editor drop down -->
+	<template id="tmplChordChartEditor">
+		<div class="btn-group chordOptions">
+			<button type="button" class="btn btn-success btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<span class="chordEditorLabel"></span> 
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li role="separator" class="divider"></li>
+				<li class="chordChartMoodToggle"><a>Make {{getMoodToggleText(chord.selectedMood).label}}</a></li>
+				<li class="chordChartDelete"><a>Delete</a></li>
+			</ul>
 		</div>
 	</template>
 
