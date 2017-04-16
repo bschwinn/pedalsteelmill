@@ -14,17 +14,16 @@ class ChordPositions {
 			// outer wrap
 		    var tmpl = document.querySelector(this.templateId);
 			var clone = document.importNode(tmpl.content, true);
-			var clone$ = $(clone);
 			var chordPos = new ChordPosition(pos);
-			var dclone$ = chordPos.parseTemplate();
+			var dclone = chordPos.parseTemplate();
 			// append err thang
-			clone$.find(this.detailPath).append(dclone$);
-			$(this.domId).append(clone$);
+			clone.querySelector(this.detailPath).appendChild(dclone);
+			document.querySelector(this.domId).appendChild(clone);
 		}
 	}
 	update(chord) {
 		this.chord = chord;
-		$(this.domId).empty();
+		document.querySelector(this.domId).innerHTML = null;
 		this.render();
 	}
 }
@@ -48,9 +47,9 @@ class ChordChart {
 	}
 
 	render(skipBind) {
-		let mainElem = $(this.domId);
+		let mainElem = document.querySelector(this.domId);
 		if (this.chords.length > 0 ) {
-			mainElem.empty();
+			mainElem.innerHTML = null;
 		}
 		let that = this;
 		for (let i=0; i<this.chords.length; i++) {
@@ -58,34 +57,33 @@ class ChordChart {
 			// outer wrap
 		    var tmpl = document.querySelector(this.templateId);
 			var clone = document.importNode(tmpl.content, true);
-			var clone$ = $(clone);
 			// chord position and editor
 			var chordPos = new ChordPosition(chordData.chord.positions[chordData.selectedPosition]);
-			var dclone$ = chordPos.parseTemplate();
+			var dclone = chordPos.parseTemplate();
 			var chordEdit = new ChordChartEditor(this.moods, i, chordData, this.positionChanged, this.moodChanged, this.chordDeleted);
-			var eclone$ = chordEdit.parseTemplate();
+			var eclone = chordEdit.parseTemplate();
 			// append err thang
-			let dragger = clone$.find(this.dragPath);
-			dragger.attr('position', i);
-			clone$.find(this.detailPath).append(eclone$);
-			clone$.find(this.detailPath).append(dclone$);
+			let dragger = clone.querySelector(this.dragPath);
+			dragger.setAttribute('position', i);
+			clone.querySelector(this.detailPath).appendChild(eclone);
+			clone.querySelector(this.detailPath).appendChild(dclone);
 			this.bindDragHandlers(chordData, dragger);
-			this.bindDropHandlers(dragger, dragger.attr('id'), this.dropClassMove);
-			mainElem.append(clone$);
+			this.bindDropHandlers(dragger, dragger.getAttribute('id'), this.dropClassMove);
+			mainElem.appendChild(clone);
 		}
 		if ( !this.rendered ) {
-			this.bindDropHandlers(mainElem, mainElem.attr('id'), this.dropClass);
+			this.bindDropHandlers(mainElem, mainElem.getAttribute('id'), this.dropClass);
 		    window.addEventListener("PSM-DRAG-START", function () {
-		        mainElem.addClass('droptarget');
+				mainElem.classList.add('droptarget')
 		    });
 
 		    window.addEventListener("PSM-DRAG-END", function () {
-		        mainElem.removeClass('droptarget');
-		        mainElem.removeClass(that.dropClass);
+		        mainElem.classList.remove('droptarget');
+		        mainElem.classList.remove(that.dropClass);
 		    });
 		    window.addEventListener("PSM-DROPPED", function () {
-		        mainElem.removeClass('droptarget');
-		        mainElem.removeClass(that.dropClass);
+		        mainElem.classList.remove('droptarget');
+		        mainElem.classList.remove(that.dropClass);
 		    });
 		}
 		this.rendered = true;
@@ -93,22 +91,22 @@ class ChordChart {
 
 	update(chords) {
 		this.chords = chords;
-		$(this.domId).empty();
+		document.querySelector(this.domId).innerHTML = null;
 		this.render(true);
 	}
 
 	bindDragHandlers(chord, el) {
 		let that = this;
-		el.attr("draggable", "true");
+		el.setAttribute("draggable", "true");
 
-	    el.bind("dragstart", function (e) {
-	    	var dragData = { root: chord.name, label: chord.label, dragType: "move", originalPosition: el.attr('position') };
-	        e.originalEvent.dataTransfer.setData('text', JSON.stringify(dragData));
+	    el.addEventListener("dragstart", function (e) {
+	    	var dragData = { root: chord.name, label: chord.label, dragType: "move", originalPosition: el.getAttribute('position') };
+	        e.dataTransfer.setData('text', JSON.stringify(dragData));
 	    	var event = new Event('PSM-DRAG-START');
 	        window.dispatchEvent(event);
 	    });
 
-	    el.bind("dragend", function (e) {
+	    el.addEventListener("dragend", function (e) {
 	    	var event = new Event('PSM-DRAG-END');
 	        window.dispatchEvent(event);
 	    });
@@ -116,40 +114,40 @@ class ChordChart {
 
 	bindDropHandlers(el, id, dropClass) {
 		let that = this;
-		el.bind("dragover", function(e) {
+		el.addEventListener("dragover", function(e) {
 			if (e.preventDefault) e.preventDefault();
 			if (e.stopPropagation) e.stopPropagation(); 
-			// e.originalEvent.dataTransfer.dropEffect = 'move';
+			// e.dataTransfer.dropEffect = 'move';
 			return false;
 		});
 
-	    el.bind("dragenter", function (e) {
-	    	if ( that.isMyElement(el, $(e.target)) || that.isChildElement(el, $(e.target)) ) {
+	    el.addEventListener("dragenter", function (e) {
+	    	if ( that.isMyElement(el, e.target) || that.isChildElement(el, e.target) ) {
 		    	// console.log("dragenter on " + el.attr('class') + ", adding drop class: " + dropClass);
-				el.addClass(dropClass);
+				el.classList.add(dropClass);
 	    	}
 	    });
 
-	    el.bind("dragleave", function (e) {
-	    	if ( that.isMyElement(el, $(e.target)) || !that.isChildElement(el, $(e.target)) ) {
+	    el.addEventListener("dragleave", function (e) {
+	    	if ( that.isMyElement(el, e.target) || !that.isChildElement(el, e.target) ) {
 				// console.log("dragleave on " + el.attr('class') + ", removing drop class: " + dropClass);
-				el.removeClass(dropClass);
+				el.classList.remove(dropClass);
 			}
 	    });
 
-	    el.bind("drop", function(e) {
+	    el.addEventListener("drop", function(e) {
 	    	// Necessary. Allows us to drop.
 	    	if (e.preventDefault) e.preventDefault(); 
 	        if (e.stopPropagation) e.stopPropagation(); 
-	        var data = JSON.parse(e.originalEvent.dataTransfer.getData("text"));
-	        that.noteDropped(data, el.attr('position'));
+	        var data = JSON.parse(e.dataTransfer.getData("text"));
+	        that.noteDropped(data, el.getAttribute('position'));
 	    	var event = new Event('PSM-DROPPED');
 	        window.dispatchEvent(event);
 	    });
 	}
 
 	isMyElement(el, tgt) {
-		if ( el.attr('id') == tgt.attr("id") ) {
+		if ( el.getAttribute('id') == tgt.getAttribute("id") ) {
 			return true;
 		}
 		return false;
@@ -159,11 +157,11 @@ class ChordChart {
 		var parent = tgt;
 		while (parent != null) {
 			// console.log('checking child element: ' + parent.attr("id"));
-			if ( el.attr('id') == parent.attr("id") ) {
+			if ( el.getAttribute('id') == parent.getAttribute("id") ) {
 				// console.log('child element found');
 				return true;
 			}
-			parent = parent.parent();
+			parent = parent.parentNode;
 		}
 		return false;
 	}
@@ -185,25 +183,24 @@ class ChordChartSelector {
 			let chord = this.chords[i];
 		    var tmpl = document.querySelector(this.templateId);
 			var clone = document.importNode(tmpl.content, true);
-			var clone$ = $(clone);
-			clone$.find(this.labelPath).text(chord.label);
-			let el = clone$.find(this.dragPath);
+			clone.querySelector(this.labelPath).innerHTML = chord.label;
+			let el = clone.querySelector(this.dragPath);
 			this.bindDragHandlers(chord, el);
-			$(this.domId).append(clone$);
+			document.querySelector(this.domId).appendChild(clone);
 		}
 	}
 	bindDragHandlers(chord, el) {
 		let that = this;
-		el.attr("draggable", "true");
+		el.setAttribute("draggable", "true");
 
-	    el.bind("dragstart", function (e) {
+	    el.addEventListener("dragstart", function (e) {
 	    	var dragData = { root: chord.name, label: chord.label, dragType: "copy", mood: that.mood.name };
-	        e.originalEvent.dataTransfer.setData('text', JSON.stringify(dragData));
+	        e.dataTransfer.setData('text', JSON.stringify(dragData));
 	    	var event = new Event('PSM-DRAG-START');
 	        window.dispatchEvent(event);
 	    });
 
-	    el.bind("dragend", function (e) {
+	    el.addEventListener("dragend", function (e) {
 	    	var event = new Event('PSM-DRAG-END');
 	        window.dispatchEvent(event);
 	    });
@@ -217,7 +214,7 @@ class ChordPosition {
 		this.neckPath = '.guitarNeck';
 		this.neckTemplate = '#tmplChordDetailNeck';
 		this.detailTemplate = '#tmplChordDetail';
-		this.stringPath = '.string div';
+		this.stringPath = '.string';
 		this.fretLabelPath = '.string .label span';
 		this.LKLPath = '.leftkneeleft';
 		this.LKVPath = '.leftkneeup';
@@ -232,50 +229,47 @@ class ChordPosition {
 	parseTemplate() {
 	    var dtmpl = document.querySelector(this.detailTemplate);
 		var dclone = document.importNode(dtmpl.content, true);
-		var dclone$ = $(dclone);
-		dclone$.find(this.positionPath).text(this.pos.fret);
+		dclone.querySelector(this.positionPath).innerHTML = this.pos.fret;
 
 		// render the neck/strings
 		for ( var j=0; j<10; j++) {
 		    var ntmpl = document.querySelector(this.neckTemplate);
 			var nclone = document.importNode(ntmpl.content, true);
-			var nclone$ = $(nclone);
 			if ( !this.pos.strings[j].enabled ) {
-				nclone$.find(this.stringPath).each(function(){
-					$(this).addClass('disabled');
-				});
+				nclone.querySelector(this.stringPath).classList.add('disabled');
 			}
-			nclone$.find(this.fretLabelPath).text(this.pos.strings[j].note);
-			dclone$.find(this.neckPath).append(nclone$);
+			nclone.querySelector(this.fretLabelPath).innerHTML = this.pos.strings[j].note;
+			dclone.querySelector(this.neckPath).appendChild(nclone);
 		}
+
 		// apply the levers
 		if (this.isPedalActive(this.pos.levers, 'LKL')) {
-			dclone$.find(this.LKLPath).addClass('active');
+			this.activatePedal(dclone, this.LKLPath);
 		}
 		if (this.isPedalActive(this.pos.levers, 'LKV')) {
-			dclone$.find(this.LKVPath).addClass('active');
+			this.activatePedal(dclone, this.LKVPath);
 		}
 		if (this.isPedalActive(this.pos.levers, 'LKR')) {
-			dclone$.find(this.LKRPath).addClass('active');
+			this.activatePedal(dclone, this.LKRPath);
 		}
 		if (this.isPedalActive(this.pos.levers, 'RKL')) {
-			dclone$.find(this.RKLPath).addClass('active');
+			this.activatePedal(dclone, this.RKLPath);
 		}
 		if (this.isPedalActive(this.pos.levers, 'RKL')) {
-			dclone$.find(this.RKLPath).addClass('active');
+			this.activatePedal(dclone, this.RKLPath);
 		}
 		// apply the pedals
 		if (this.isPedalActive(this.pos.pedals, 'A')) {
-			dclone$.find(this.PedalAPath).addClass('active');
+			this.activatePedal(dclone, this.PedalAPath);
 		}
 		if (this.isPedalActive(this.pos.pedals, 'B')) {
-			dclone$.find(this.PedalBPath).addClass('active');
+			this.activatePedal(dclone, this.PedalBPath);
 		}
 		if (this.isPedalActive(this.pos.pedals, 'C')) {
-			dclone$.find(this.PedalCPath).addClass('active');
+			this.activatePedal(dclone, this.PedalCPath);
 		}
 
-		return dclone$;
+		return dclone;
 	}
 	isPedalActive(arr, item) {
 		for( var i=0; i<arr.length; i++ ) {
@@ -283,6 +277,10 @@ class ChordPosition {
 				return true;
 			}
 		}		
+	}
+	activatePedal(par, path) {
+		var elem = par.querySelector(path);
+		elem.classList.add('active');
 	}
 }
 
@@ -296,6 +294,8 @@ class ChordChartEditor {
 		this.moodChanged = moodChanged;
 		this.chordDeleted = chordDeleted;
 		this.template = '#tmplChordChartEditor';
+		this.containerPath = '.chordOptions';
+		this.menuPath = '.dropdown-toggle';
 		this.labelPath = '.chordEditorLabel';
 		this.positionsPath = 'ul.dropdown-menu';
 		this.moodTogglePath = 'li.chordChartMoodToggle a';
@@ -305,34 +305,50 @@ class ChordChartEditor {
 	parseTemplate() {
 	    var dtmpl = document.querySelector(this.template);
 		var dclone = document.importNode(dtmpl.content, true);
-		var dclone$ = $(dclone);
 		var chordPos = this.chordData.chord.positions[this.chordData.selectedPosition];
-		dclone$.find(this.labelPath).text( chordPos.root + this.chordData.selectedMood.label + ' - Fret:' + chordPos.fret);
-		var list = dclone$.find(this.positionsPath);
+		let container = dclone.querySelector(this.containerPath);
+		var list = dclone.querySelector(this.positionsPath);
+		// dropdown label
+		dclone.querySelector(this.labelPath).innerHTML = chordPos.root + this.chordData.selectedMood.label + ' - Fret:' + chordPos.fret;
 		let that = this;
+		// chord position dropdown items
 		for (let i=this.chordData.chord.positions.length-1; i>=0; i--) {
 			let pos = this.chordData.chord.positions[i];
-			var item = $('<li></li>');
-			var link = $('<a></a>').text(pos.fret);
-			item.append(link);
-			item.click(function() {
+			var item = document.createElement("li");
+			var link = document.createElement("a");
+			link.innerHTML = pos.fret;
+			item.appendChild(link);
+			link.addEventListener('click', function() {
 				if (that.positionChanged != null) {
 					that.positionChanged(that.chartPosition, that.chordData, i);
 				}
 			});
-			list.prepend(item);
+			list.insertBefore(item, list.childNodes[0]);
 		}
-		dclone$.find(this.deletePath).click(function() {
+		// chord delete handler
+		dclone.querySelector(this.deletePath).addEventListener('click', function() {
 			if (that.chordDeleted != null) {
 				that.chordDeleted(that.chartPosition, that.chordData);
 			}
 		});
-		dclone$.find(this.moodTogglePath).text('Make ' + this.getMoodToggleText(this.chordData.selectedMood)).click(function() {
+		// chord major/minor toggler
+		var tog = dclone.querySelector(this.moodTogglePath);
+		tog.innerHTML = 'Make ' + this.getMoodToggleText(this.chordData.selectedMood);
+		tog.addEventListener('click', function() {
 			if (that.moodChanged != null) {
 				that.moodChanged(that.chartPosition, that.chordData);
 			}
 		});
-		return dclone$;
+		// dropdown hide/show
+		dclone.querySelector(this.menuPath).addEventListener('click', function(event) {
+			container.classList.toggle('open');
+			return false;
+		});
+		// dclone.querySelector(this.menuPath).addEventListener('blur', function(event) {
+		// 	container.classList.remove('open');
+		// 	return false;
+		// });
+		return dclone;
 	}
 	getMoodToggleText(mood) {
 		if ( mood.name == "min" ) {
@@ -389,7 +405,7 @@ class ChordDB {
 		var chordMap = {}
 		for ( var i=0; i<this._chordNames.length; i++ ) {
 			var chordName = this._chordNames[i].name;
-			chordMap[chordName] = this.createMajorChord(chordName, i);
+			chordMap[chordName] = this.createMajorChord(this._chordNames[i], i);
 		}
 		return chordMap;
 	}
@@ -397,44 +413,44 @@ class ChordDB {
 		var chordMap = {}
 		for ( var i=0; i<this._chordNames.length; i++ ) {
 			var chordName = this._chordNames[i].name;
-			chordMap[chordName] = this.createMinorChord(chordName, i);
+			chordMap[chordName] = this.createMinorChord(this._chordNames[i], i);
 		}
 		return chordMap;
 	}
 
-	createMajorChord(note, noteOffset) {
+	createMajorChord(ch, noteOffset) {
 		var positions = [];
-		positions[positions.length] = this.createChordPosition(note, noteOffset, [], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
-		positions[positions.length] = this.createChordPosition(note, 3+noteOffset, ["A"], ["LKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+		positions[positions.length] = this.createChordPosition(ch.name, noteOffset, [], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+		positions[positions.length] = this.createChordPosition(ch.name, 3+noteOffset, ["A"], ["LKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
 
 		if ( noteOffset > 6 ) {
-			positions.unshift(this.createChordPosition(note, (7+noteOffset)-12, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
-			positions.unshift(this.createChordPosition(note, (5+noteOffset)-12, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
+			positions.unshift(this.createChordPosition(ch.name, (7+noteOffset)-12, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
+			positions.unshift(this.createChordPosition(ch.name, (5+noteOffset)-12, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
 		} else if ( noteOffset > 4 ) {
-			positions[positions.length] = this.createChordPosition(note, 5+noteOffset, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
-			positions.unshift(this.createChordPosition(note, (7+noteOffset)-12, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
+			positions[positions.length] = this.createChordPosition(ch.name, 5+noteOffset, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+			positions.unshift(this.createChordPosition(ch.name, (7+noteOffset)-12, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
 		} else {
-			positions[positions.length] = this.createChordPosition(note, 5+noteOffset, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
-			positions[positions.length] = this.createChordPosition(note, 7+noteOffset, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+			positions[positions.length] = this.createChordPosition(ch.name, 5+noteOffset, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+			positions[positions.length] = this.createChordPosition(ch.name, 7+noteOffset, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
 		}
 
-		return { "name" : note, "type" : "maj", "positions": positions };
+		return { "name" : ch.name, "label" : ch.label, "type" : "maj", "positions": positions };
 	}
-	createMinorChord(note, noteOffset) {
+	createMinorChord(ch, noteOffset) {
 		var positions = [];
-		positions[positions.length] = this.createChordPosition(note, noteOffset, ["B"], ["RKL"], [0, 0, 0, 1, 1, 1, 0, 1, 0, 1]);
-		positions[positions.length] = this.createChordPosition(note, 3+noteOffset, ["A"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+		positions[positions.length] = this.createChordPosition(ch.name, noteOffset, ["B"], ["RKL"], [0, 0, 0, 1, 1, 1, 0, 1, 0, 1]);
+		positions[positions.length] = this.createChordPosition(ch.name, 3+noteOffset, ["A"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
 		if ( noteOffset > 4 ) {
-			positions.unshift(this.createChordPosition(note, (10+noteOffset)-12, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]));
-			positions.unshift(this.createChordPosition(note, (7+noteOffset)-12, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
+			positions.unshift(this.createChordPosition(ch.name, (10+noteOffset)-12, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]));
+			positions.unshift(this.createChordPosition(ch.name, (7+noteOffset)-12, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
 		} else if ( noteOffset > 1 ) {
-			positions[positions.length] = this.createChordPosition(note, 7+noteOffset, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
-			positions.unshift(this.createChordPosition(note, (10+noteOffset)-12, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]));
+			positions[positions.length] = this.createChordPosition(ch.name, 7+noteOffset, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+			positions.unshift(this.createChordPosition(ch.name, (10+noteOffset)-12, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]));
 		} else {
-			positions[positions.length] = this.createChordPosition(note, 7+noteOffset, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
-			positions[positions.length] = this.createChordPosition(note, 10+noteOffset, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]);
+			positions[positions.length] = this.createChordPosition(ch.name, 7+noteOffset, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+			positions[positions.length] = this.createChordPosition(ch.name, 10+noteOffset, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]);
 		}
-		return { "name" : note, "type" : "min", "positions": positions };
+		return { "name" : ch.name, "label" : ch.label, "type" : "min", "positions": positions };
 	}
 	createChordPosition(note, noteOffset, pedals, levers, stringMask) {
 		var strings = new Array();
@@ -503,20 +519,19 @@ class TemplatedSelector {
 			let itm = this.items[i];
 		    var tmpl = document.querySelector(this.templateId);
 			var clone = document.importNode(tmpl.content, true);
-			var clone$ = $(clone);
-			clone$.find(this.labelPath).text(itm.label);
+			clone.querySelector(this.labelPath).innerHTML = itm.label;
 			if ( this.selected != null ) {
 				if ( this.selected.name == itm.name ) {
-					clone$.find(this.selectedPath).addClass(this.selectedClass);
+					clone.querySelector(this.selectedPath).classList.add(this.selectedClass);
 				}
 			}
 			if ( this.selectHandler != null ) {
-				clone$.find(this.clickPath).click(function(){
+				clone.querySelector(this.clickPath).onclick = function(){
 					that.selected = itm;
 					that.selectHandler(itm);
-				});
+				};
 			}
-			$(this.domId).append(clone$);
+			document.querySelector(this.domId).appendChild(clone);
 		}
 
 	}

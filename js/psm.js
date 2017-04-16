@@ -6,7 +6,7 @@ var selectedChord = chordDB.majorChords["E"];
 var chartSelectedMood = chordDB.chordMoods[0];
 var chordChart = []; // [ { root : "A", chord : chordDB.majorChords["A"], selectedPosition: 0, selectedMood: chordDB.chordMoods[0] } ]
 
-$( document ).ready(function() {
+document.addEventListener("DOMContentLoaded", function(event) { 
 	// init the chord positions panel - chord/mood selectors and chord positions
 	moodSelector = new TemplatedSelector(chordDB.chordMoods, '#moodSelector', '#tmplMoodSelector', function(mood){
 		selectedMood = mood;
@@ -19,6 +19,14 @@ $( document ).ready(function() {
 
 	// init the chord chart panel
 	chartMoodSelector = new TemplatedSelector(chordDB.chordMoods, '#chartMoodSelector', '#tmplChartMoodSelector', function(mood){
+	// update selectors
+	var moods = document.querySelectorAll('#chartMoodSelector label');
+		for ( var i=0; i<moods.length; i++ ) {
+			moods[i].classList.remove('active');
+			if ( moods[i].innerText == chartSelectedMood.label ) {
+				moods[i].classList.add('active');
+			}
+		}
 		chartSelectedMood = mood;
 		chartChordSelector.mood = mood;
 	}, chartSelectedMood, 'active');
@@ -42,6 +50,21 @@ logit = function(logMsg) {
 }
 
 updateSelectedChord = function(chord) {
+	// update selectors
+	var moods = document.querySelectorAll('#moodSelector label');
+	for ( var i=0; i<moods.length; i++ ) {
+		moods[i].classList.remove('active');
+		if ( moods[i].innerText == selectedMood.label ) {
+			moods[i].classList.add('active');
+		}
+	}
+	var chords = document.querySelectorAll('#chordSelector label');
+	for ( var i=0; i<chords.length; i++ ) {
+		chords[i].classList.remove('active');
+		if ( chords[i].innerText == chord.label ) {
+			chords[i].classList.add('active');
+		}
+	}
 	if ( selectedMood.name == "maj") {
 		selectedChord = chordDB.majorChords[chord.name];
 	} else {

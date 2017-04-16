@@ -38,8 +38,8 @@
 .guitarNeck .string .right { 
 	width:69%;
 }
-.guitarNeck .string .disabled {
-	border-color:#CCC; 
+.guitarNeck .string.disabled div {
+	border-bottom-color: #CCC; 
 }
 .guitarNeck .string .mid { 
 	width:1%;
