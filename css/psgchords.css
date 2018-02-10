@@ -130,13 +130,14 @@ nav.psgheader .rightheader {
 }
 .guitarLevers { 
     position: relative; 
-    padding:0 4px;
+    padding:0 5px;
+    display:flex;
 }
 .guitarLevers .lever, .guitarLevers .leverup {
 	height: 34px;
-	display:inline-block;
 	margin:0;
-	padding:0;
+    padding:0;
+    width:4%;
 }
 .guitarLevers .leverup {
 	height: 28px;
@@ -146,16 +147,20 @@ nav.psgheader .rightheader {
 	border-top:3px solid black;
 }
 .guitarLevers .lever.spacer {
-	width:55%;
+	width:60%;
 }
 .guitarLevers .leverup.notinstalled {
 	border-top:0;
 }
 .guitarLevers .lever.leftkneeleft, .guitarLevers .lever.rightkneeleft {
-	border-left:solid 2px black;
+    position: relative;
+    border-left:solid 2px black;
+    left:0;
 }
 .guitarLevers .lever.leftkneeright, .guitarLevers .lever.rightkneeright {
-	border-right:solid 2px black;
+    position: relative;
+    border-right:solid 2px black;
+    right:0;
 }
 .guitarLevers .leftkneeleft.active, .guitarLevers .rightkneeleft.active { 
     transform: rotate(10deg);
@@ -168,16 +173,16 @@ nav.psgheader .rightheader {
 	color:red;
 }
 .guitarLevers .leftkneeup.active {
-    transform: skew(10deg) rotate(10deg);
-    -webkit-transform: skew(10deg) rotate(10deg);
-    -moz-transform: skew(10deg) rotate(10deg);
+    transform: skew(4deg) rotate(8deg);
+    -webkit-transform: skew(4deg) rotate(8deg);
+    -moz-transform: skew(4deg) rotate(8deg);
 	transform-origin: 0 100%;
 	-webkit-transform-origin: 0 100%;
 	-moz-transform-origin: 0 100%;
 	border-color:red;
 	color:red;
 	height: 32px;
-	margin-top: 0;
+	margin-top: 1px;
 }
 .guitarLevers .leftkneeright.active, .guitarLevers .rightkneeright.active {
     transform: rotate(-10deg);
