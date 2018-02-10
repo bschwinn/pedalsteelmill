@@ -261,12 +261,15 @@ class ChordPosition {
 		// apply the pedals
 		if (this.isPedalActive(this.pos.pedals, 'A')) {
 			this.activatePedal(dclone, this.PedalAPath);
+			this.activateLabel(dclone, this.PedalAPath);
 		}
 		if (this.isPedalActive(this.pos.pedals, 'B')) {
 			this.activatePedal(dclone, this.PedalBPath);
+			this.activateLabel(dclone, this.PedalBPath);
 		}
 		if (this.isPedalActive(this.pos.pedals, 'C')) {
 			this.activatePedal(dclone, this.PedalCPath);
+			this.activateLabel(dclone, this.PedalCPath);
 		}
 
 		return dclone;
@@ -279,7 +282,11 @@ class ChordPosition {
 		}		
 	}
 	activatePedal(par, path) {
-		var elem = par.querySelector(path);
+		let elem = par.querySelector(path);
+		elem.classList.add('active');
+	}
+	activateLabel(par, path) {
+		let elem = par.querySelector(path + '.label');
 		elem.classList.add('active');
 	}
 }
@@ -362,8 +369,11 @@ class ChordChartEditor {
 // the chord "database"
 class ChordDB {
 	constructor() {
-
-		this._chordNames = [
+		this.chordMoods = [
+			{ "name": "maj", "label": "Major"}
+			,{ "name": "min", "label": "Minor"}
+		];
+        this.e9chordNames = [
 			{ "name": "E", "label": "E"}
 			,{ "name": "F", "label": "F"}
 			,{ "name": "F#", "label": "F#/Gb"}
@@ -376,90 +386,108 @@ class ChordDB {
 			,{ "name": "C#", "label": "C#/Db"}
 			,{ "name": "D", "label": "D"}
 			,{ "name": "D#", "label": "D#/Eb" }
-		];
-		this._chordMoods = [
-			{ "name": "maj", "label": "Major"}
-			,{ "name": "min", "label": "Minor"}
-		];
-		this._majorChords = this.createAllMajorChords();
-		this._minorChords = this.createAllMinorChords();
-	}
+        ];
+        this.c6chordNames = this.e9chordNames.slice(0);
+        for (let i=0; i<4; i++) {
+            const item = this.c6chordNames.pop();
+            this.c6chordNames.unshift(item);
+        }
 
+        this.tunings = {};
+        this.tunings["E9"] = this.createE9Tuning();
+        this.tunings["C6"] = this.createC6Tuning();
+        this.setTuning("E9");
+    }
+
+    setTuning(name) {
+        if (name === "E9") {
+            this.currentTuning = this.tunings["E9"];
+        } else if (name === "C6") {
+            this.currentTuning = this.tunings["C6"];
+        } else {
+            console.log("unsupported tuning.")
+        }
+    }
+    
 	get majorChords() {
-		return this._majorChords;
+		return this.currentTuning.majorChords;
 	}
   
 	get minorChords() {
-		return this._minorChords;
+		return this.currentTuning.minorChords;
 	}
 
 	get chordNames() {
-		return this._chordNames;
+		return this.currentTuning.chordNames;
 	}
 
-	get chordMoods() {
-		return this._chordMoods;
-	}
-
-	createAllMajorChords() {
+    // E9 tunning
+    createE9Tuning() {
+        return {
+            chordNames: this.e9chordNames,
+            majorChords: this.createE9MajorChords(),
+		    minorChords: this.createE9MinorChords()
+        };
+    }
+	createE9MajorChords() {
 		var chordMap = {}
-		for ( var i=0; i<this._chordNames.length; i++ ) {
-			var chordName = this._chordNames[i].name;
-			chordMap[chordName] = this.createMajorChord(this._chordNames[i], i);
+		for ( var i=0; i<this.e9chordNames.length; i++ ) {
+			var chordName = this.e9chordNames[i].name;
+			chordMap[chordName] = this.createE9MajorChord(this.e9chordNames[i], i);
 		}
 		return chordMap;
 	}
-	createAllMinorChords() {
+	createE9MinorChords() {
 		var chordMap = {}
-		for ( var i=0; i<this._chordNames.length; i++ ) {
-			var chordName = this._chordNames[i].name;
-			chordMap[chordName] = this.createMinorChord(this._chordNames[i], i);
+		for ( var i=0; i<this.e9chordNames.length; i++ ) {
+			var chordName = this.e9chordNames[i].name;
+			chordMap[chordName] = this.createE9MinorChord(this.e9chordNames[i], i);
 		}
 		return chordMap;
 	}
 
-	createMajorChord(ch, noteOffset) {
+	createE9MajorChord(ch, noteOffset) {
 		var positions = [];
-		positions[positions.length] = this.createChordPosition(ch.name, noteOffset, [], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
-		positions[positions.length] = this.createChordPosition(ch.name, 3+noteOffset, ["A"], ["LKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+		positions[positions.length] = this.createE9ChordPosition(ch.name, noteOffset, [], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+		positions[positions.length] = this.createE9ChordPosition(ch.name, 3+noteOffset, ["A"], ["LKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
 
 		if ( noteOffset > 6 ) {
-			positions.unshift(this.createChordPosition(ch.name, (7+noteOffset)-12, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
-			positions.unshift(this.createChordPosition(ch.name, (5+noteOffset)-12, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
+			positions.unshift(this.createE9ChordPosition(ch.name, (7+noteOffset)-12, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
+			positions.unshift(this.createE9ChordPosition(ch.name, (5+noteOffset)-12, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
 		} else if ( noteOffset > 4 ) {
-			positions[positions.length] = this.createChordPosition(ch.name, 5+noteOffset, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
-			positions.unshift(this.createChordPosition(ch.name, (7+noteOffset)-12, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
+			positions[positions.length] = this.createE9ChordPosition(ch.name, 5+noteOffset, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+			positions.unshift(this.createE9ChordPosition(ch.name, (7+noteOffset)-12, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
 		} else {
-			positions[positions.length] = this.createChordPosition(ch.name, 5+noteOffset, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
-			positions[positions.length] = this.createChordPosition(ch.name, 7+noteOffset, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+			positions[positions.length] = this.createE9ChordPosition(ch.name, 5+noteOffset, [], ["LKR", "RKL"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+			positions[positions.length] = this.createE9ChordPosition(ch.name, 7+noteOffset, ["A","B"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
 		}
 
 		return { "name" : ch.name, "label" : ch.label, "type" : "maj", "positions": positions };
 	}
-	createMinorChord(ch, noteOffset) {
+	createE9MinorChord(ch, noteOffset) {
 		var positions = [];
-		positions[positions.length] = this.createChordPosition(ch.name, noteOffset, ["B"], ["RKL"], [0, 0, 0, 1, 1, 1, 0, 1, 0, 1]);
-		positions[positions.length] = this.createChordPosition(ch.name, 3+noteOffset, ["A"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+		positions[positions.length] = this.createE9ChordPosition(ch.name, noteOffset, ["B"], ["RKL"], [0, 0, 0, 1, 1, 1, 0, 1, 0, 1]);
+		positions[positions.length] = this.createE9ChordPosition(ch.name, 3+noteOffset, ["A"], [], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
 		if ( noteOffset > 4 ) {
-			positions.unshift(this.createChordPosition(ch.name, (10+noteOffset)-12, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]));
-			positions.unshift(this.createChordPosition(ch.name, (7+noteOffset)-12, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
+			positions.unshift(this.createE9ChordPosition(ch.name, (10+noteOffset)-12, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]));
+			positions.unshift(this.createE9ChordPosition(ch.name, (7+noteOffset)-12, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]));
 		} else if ( noteOffset > 1 ) {
-			positions[positions.length] = this.createChordPosition(ch.name, 7+noteOffset, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
-			positions.unshift(this.createChordPosition(ch.name, (10+noteOffset)-12, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]));
+			positions[positions.length] = this.createE9ChordPosition(ch.name, 7+noteOffset, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+			positions.unshift(this.createE9ChordPosition(ch.name, (10+noteOffset)-12, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]));
 		} else {
-			positions[positions.length] = this.createChordPosition(ch.name, 7+noteOffset, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
-			positions[positions.length] = this.createChordPosition(ch.name, 10+noteOffset, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]);
+			positions[positions.length] = this.createE9ChordPosition(ch.name, 7+noteOffset, ["A", "B"], ["LKV"], [0, 0, 1, 1, 1, 1, 0, 1, 0, 1]);
+			positions[positions.length] = this.createE9ChordPosition(ch.name, 10+noteOffset, ["B", "C"], [], [0, 0, 1, 1, 1, 1, 0, 0, 0, 0]);
 		}
 		return { "name" : ch.name, "label" : ch.label, "type" : "min", "positions": positions };
 	}
-	createChordPosition(note, noteOffset, pedals, levers, stringMask) {
+	createE9ChordPosition(note, noteOffset, pedals, levers, stringMask) {
 		var strings = new Array();
 		for( var i=0; i<stringMask.length; i++ ) {
-			strings[strings.length] = { note: this.findNoteForOffset(noteOffset, i, pedals, levers), enabled: stringMask[i] };
+			strings[strings.length] = { note: this.findNoteForOffsetE9(noteOffset, i, pedals, levers), enabled: stringMask[i] };
 		}
 		return { "root": note, "fret" : 0+noteOffset, "pedals" : pedals, "levers" : levers, "strings" : strings };
 	}
-	findNoteForOffset(offset, string, pedals, levers) {
+	findNoteForOffsetE9(offset, string, pedals, levers) {
 		var stringNoteOffsets = [2, 11, 4, 0, 7, 4, 2, 0, 10, 7];
 		if ( pedals.indexOf("A") > -1 ) {
 			stringNoteOffsets[4] = stringNoteOffsets[4] + 2;
@@ -494,8 +522,37 @@ class ChordDB {
 				stringNoteOffsets[i] = 12 + stringNoteOffsets[i];
 			}
 		}
-		return this._chordNames[(offset + stringNoteOffsets[string]) % 12].name;
+		return this.e9chordNames[(offset + stringNoteOffsets[string]) % 12].name;
+    }
+    
+    // C6 tunning
+    createC6Tuning() {
+        return {
+            chordNames: this.c6chordNames,
+            majorChords: this.createC6MajorChords(),
+		    minorChords: this.createC6MinorChords()
+        };
+    }
+	createC6MajorChords() {
+		var chordMap = {}
+		for ( var i=0; i<this.c6chordNames.length; i++ ) {
+			var chordName = this.c6chordNames[i].name;
+			chordMap[chordName] = this.createC6MajorChord(this.c6chordNames[i], i);
+		}
+		return chordMap;
 	}
+	createC6MinorChords() {
+		var chordMap = {}
+		for ( var i=0; i<this.c6chordNames.length; i++ ) {
+			var chordName = this.c6chordNames[i].name;
+			chordMap[chordName] = this.createC6MinorChord(this.c6chordNames[i], i);
+		}
+		return chordMap;
+    }
+    // TODO
+    createC6MajorChord(ch, noteOffset) {}
+    createC6MinorChord(ch, noteOffset) {}
+    
 }
 
 // kinda generic templated selector

@@ -1,5 +1,77 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding:0;
+    background: url('../img/blackmetal.png');
+}
+nav.psgheader {
+    height:45px;
+    font-size: 1.2em;
+    padding:10px 0;
+    display:flex;
+}
+nav.psgheader a, nav.psgheader a:hover, nav.psgheader a:visited {
+    color:orange;
+    text-decoration: none;
+}
+nav.psgheader .leftheader {
+    padding:0 0 0 10px;
+    color:orange;
+    width:50%;
+}
+nav.psgheader .rightheader {
+    padding:0 10px 0 0;
+    color:orange;
+    right:0px;
+    width:50%;
+    text-align: right;
+}
+
+.psgbody {
+    background: url('../img/graymetal2.png');
+    padding:10px 0 0 0;
+    border-radius: 10px;
+    margin:0 20px;
+}
+
+.psgpanel {
+    border-radius: 7px;
+    background: url('../img/blackmetal.png');
+    padding:0 10px;
+    margin: 0 0 10px 0;
+}
+.psgpanel-head {
+    font-size: 1.1em;
+    padding:10px 5px;
+    color:orange;
+}
+.psgpanel-head .title {
+    display:inline-block;
+    width:100px;
+}
+.psgpanel-body {
+    font-size: 1em;
+    padding:0 5px;
+}
+
+
+.btn-psg-radio {
+    color:#fff;
+    background-color:orange;
+    border-color:rgb(218, 148, 20);
+}
+.btn-psg-radio.active {
+    background-color:rgb(218, 148, 20);
+    border-color:rgb(170, 112, 5);
+    color:#fff;
+    font-weight: bold;
+}
+
 .chordPosition{
 	position: relative;
+}
+.chordPosition .well {
+    padding-bottom:0;
 }
 .fretMarker {
 	padding-left:28%;
@@ -27,8 +99,9 @@
 	margin-top:0.7em;
 	display:inline-block;
 }
-.guitarNeck .string .label.disabled span {
-	color:#ccc;
+.guitarNeck .string.disabled .label span {
+    color:#ccc;
+    font-weight: normal;
 }
 .guitarNeck .string .left { 
 	width:10%;
@@ -47,22 +120,26 @@
 	padding:0; 
 	border-right:solid 1px black; 
 }
+.guitarFront {
+    margin: 15px 0 0 0;
+}
 .guitarBody {
-	border:2px solid black;
+	border:1px solid black;
+    border-radius: 2px;
 	height:20px;
-	margin: 15px 0 0 0;
 }
 .guitarLevers { 
-	position: relative; 
+    position: relative; 
+    padding:0 4px;
 }
 .guitarLevers .lever, .guitarLevers .leverup {
-	height: 40px;
+	height: 34px;
 	display:inline-block;
 	margin:0;
 	padding:0;
 }
 .guitarLevers .leverup {
-	height: 33px;
+	height: 28px;
 	width:12%;
 	padding:0;
 	margin:5px 0 0 0;
@@ -99,35 +176,56 @@
 	-moz-transform-origin: 0 100%;
 	border-color:red;
 	color:red;
-	height: 38px;
+	height: 32px;
 	margin-top: 0;
 }
 .guitarLevers .leftkneeright.active, .guitarLevers .rightkneeright.active {
     transform: rotate(-10deg);
     -webkit-transform: rotate(-10deg);
     -moz-transform: rotate(-10deg);
+	transform-origin: 0 0;
+	-webkit-transform-origin: 0 0;
+	-moz-transform-origin: 0 0;
 	border-color:red;
 	color:red;
 }
 
 .guitarPedals { 
 	position: relative; 
-	margin: 15px 0 0 0;
-	height:2.8em;
+    margin: 5px 0 0 0;
+    padding:0 10px;
+	height:30px;
+    clear:both;
 }
 .guitarPedals div { 
 	border-top: 3px solid black; 
-	width:15px; 
-	margin:0 15px 0 0; 
+	width:12px; 
+	margin:0 10px 0 0; 
 	float:left; 
-	height:28px; 
-	padding-top:11px;
 }
 .guitarPedals div.active { 
-	margin-top:10px; 
-	padding-top:1px;
-	border-color:red;
-	color:red;
+    border-top:none;
+    padding-top:30px;
+	background-color:red;
+    color:red;
+    transform: perspective( 120px ) rotateX( 51deg ) translateY(-13px);
+}
+.guitarPedalLabels {
+    position: relative;
+    padding:0 10px;
+    clear:both;
+    top:-10px;
+}
+.guitarPedalLabels div.label { 
+    border:none;
+	width:12px; 
+	margin:0 10px 0 0; 
+    float:left; 
+    color:#000;
+    padding:0;
+}
+.guitarPedalLabels div.label.active { 
+    color:red;
 }
 
 .droptarget {
@@ -143,7 +241,7 @@
 }
 
 .chordChart {
-	margin-bottom:20px; 
+	/* margin-bottom:20px;  */
 }
 .chordOptions {
 	margin: 0 auto;

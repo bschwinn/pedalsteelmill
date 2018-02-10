@@ -1,9 +1,14 @@
 // the globals
 var DEBUG = false;
+var defaultTuning = "E9";
+var defaultNoteOffset = 0;
+
 var chordDB = new ChordDB();
-var selectedMood = chordDB.chordMoods[0];
-var selectedChord = chordDB.majorChords["E"];
-var chartSelectedMood = chordDB.chordMoods[0];
+chordDB.setTuning("E9");
+
+var selectedMood = chordDB.chordMoods[defaultNoteOffset]; // major
+var selectedChord = chordDB.majorChords[chordDB.chordNames[defaultNoteOffset].name]; // first major chord
+var chartSelectedMood = chordDB.chordMoods[defaultNoteOffset];
 var chordChart = []; // [ { root : "A", chord : chordDB.majorChords["A"], selectedPosition: 0, selectedMood: chordDB.chordMoods[0] } ]
 
 document.addEventListener("DOMContentLoaded", function(event) { 
