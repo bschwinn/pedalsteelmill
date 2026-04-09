@@ -1,0 +1,30 @@
+.faceplate {
+  background-image: var(--main-bg);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 8px;
+}
+
+.faceplate-head {
+  font-size: 1.1em;
+  padding:8px 2px;
+  display: flex;
+  flex-direction: row;
+}
+
+.main-panel {
+  background-image: var(--panel-bg);
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 16px;
+}
+
+.sub-panel {
+  background-image: var(--main-bg);
+  padding: 16px;
+  border-radius: 8px;
+}
