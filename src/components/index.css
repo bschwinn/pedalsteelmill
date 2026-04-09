@@ -1,0 +1,112 @@
+/* help and about */
+
+.about, .help {
+  padding: 8px;
+  max-width: 616px;
+  color: var(--text-color-alt);
+}
+
+.about-logo {
+  padding: 8px;
+}
+
+.about-content {
+  padding: 16px;
+}
+
+.help-hero {
+  display: flex;
+  align-items: top;
+  gap: 15px;
+}
+
+/* chord positions and chart */
+
+.chord-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chord-panel-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 32px;
+}
+
+.chord-panel-controls-label {
+  width: 116px;
+}
+
+.chord-panel-list-empty {
+  padding: 16px;
+  color: var(--text-color-alt2);
+  border: 1px solid var(--text-color-alt2);
+  border-radius: 4px;
+}
+
+/* modal overlay */
+
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+
+.modalWindow {
+  padding: 16px;
+  background-image: var(--main-bg);
+  border-radius: 8px;
+  min-width: 400px;
+}
+
+.modalHeader {
+  padding: 8px 0;
+  display: flex;
+  flex-direction: row;
+  font-size: 1.2em;
+  font-weight: bold;
+  justify-content: space-between;
+}
+
+/* button selector */
+
+.button-selector {
+  display: flex;
+  flex-direction: row;
+}
+
+.button-selector button {
+  cursor: pointer;
+  border: 1px solid var(--text-color-alt2);
+  color: var(--text-color-alt2);
+  padding: 8px 12px;
+  background-color: #282828;
+}
+
+.button-selector button.selected {
+  color: #fefefe;
+  background-color: #4a9eff;
+  border-color: #4a9eff;
+}
+
+.button-selector button + button {
+  border-left: 0px;
+}
+
+.button-selector button:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.button-selector button:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}

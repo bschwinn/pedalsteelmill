@@ -1,7 +1,5 @@
 import { type ReactNode } from 'react'
 
-import './Modal.css'
-
 export type ModalProps = {
   title: string;
   show: boolean;

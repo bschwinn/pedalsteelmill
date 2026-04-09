@@ -7,9 +7,9 @@ export const Header = ({ onAboutClick, onHelpClick }: HeaderProps) => {
 
   return (
     <header className="faceplate-head">
-      <div style={{ marginRight: "auto" }}>
+      <h1 style={{ marginRight: "auto" }}>
         PedalSteelMill - Chords for Pedal Steel Guitar
-      </div>
+      </h1>
       <div>
         <a href="#" onClick={() => onHelpClick()}>
           Help

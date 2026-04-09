@@ -1,8 +1,9 @@
 import { useState } from "react";
 
 import "./App.css";
+import "./components/index.css";
 
-import { Modal } from "./Modal";
+import { Modal } from "./components/modal";
 import { Header } from "./components/header";
 import { About } from "./components/about";
 import { Help } from "./components/help";

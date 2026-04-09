@@ -1,5 +1,3 @@
-/* containers and backgrounds */
-
 .faceplate {
   background-image: var(--main-bg);
   display: flex;
@@ -10,59 +8,33 @@
 
 .faceplate-head {
   font-size: 1.1em;
-  padding:8px 2px;
+  padding: 0 2px 8px 2px;
   display: flex;
   flex-direction: row;
+}
+
+.faceplate-head h1 {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.faceplate-head a {
+  font-weight: bold;
+  font-size: 1.2em;
 }
 
 .main-panel {
   background-image: var(--panel-bg);
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  gap: 16px;
+  padding: 12px;
+  gap: 12px;
 }
 
 .sub-panel {
   background-image: var(--main-bg);
   padding: 16px;
   border-radius: 8px;
-}
-
-/* help and about components */
-
-.about, .help {
-  padding: 8px;
-  max-width: 616px;
-  color: var(--text-color-alt);
-}
-
-.about-logo {
-  padding: 8px;
-}
-
-.about-content {
-  padding: 16px;
-}
-
-.help-hero {
-  display: flex;
-  align-items: top;
-  gap: 15px;
-}
-
-/* chord positions and chart styles */
-
-.chord-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.chord-panel-controls {
-  display: flex;
-  flex-direction: row;
-  gap: 32px;
 }
