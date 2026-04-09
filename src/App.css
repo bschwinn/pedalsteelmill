@@ -1,3 +1,5 @@
+/* containers and backgrounds */
+
 .faceplate {
   background-image: var(--main-bg);
   display: flex;
@@ -29,6 +31,8 @@
   border-radius: 8px;
 }
 
+/* help and about components */
+
 .about, .help {
   padding: 8px;
   max-width: 616px;
@@ -41,4 +45,24 @@
 
 .about-content {
   padding: 16px;
+}
+
+.help-hero {
+  display: flex;
+  align-items: top;
+  gap: 15px;
+}
+
+/* chord positions and chart styles */
+
+.chord-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chord-panel-controls {
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
 }

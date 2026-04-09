@@ -6,6 +6,8 @@ import { Modal } from "./Modal";
 import { Header } from "./components/header";
 import { About } from "./components/about";
 import { Help } from "./components/help";
+import { ChordPositions } from "./components/chordPositions";
+import { ChordChart } from "./components/chordChart";
 
 function App() {
   const [showAbout, setShowAbout] = useState<boolean>(false);
@@ -17,13 +19,9 @@ function App() {
       <Header onAboutClick={() => setShowAbout(true)} onHelpClick={() => setShowHelp(true)} />
 
       <div className="main-panel">
-        <section className="sub-panel">
-          <div>Chord Positions</div>
-        </section>
+        <ChordPositions />
 
-        <section className="sub-panel">
-          <div>Chord Chart</div>
-        </section>
+        <ChordChart />
       </div>
 
       <Modal

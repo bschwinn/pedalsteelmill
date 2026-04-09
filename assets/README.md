@@ -105,7 +105,7 @@ inkscape ./assets/pedalsteelmill-monogram-64.svg --export-width=32 --export-file
 convert ./tmp.png ./public/favicon.ico
 rm ./tmp.png
 
-# copy logo file
+# copy logo files
 cp ./assets/pedalsteelmill-logo-full.svg ./public/logo-full.svg
-
+cp ./assets/pedalsteelmill-icon-180.svg ./public/logo-compact.svg
 ```
