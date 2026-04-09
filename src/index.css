@@ -2,12 +2,16 @@
   --main-bg: url('blackmetal.png');
   --panel-bg: url('metal.png');
   --text-color: orange;
+  --text-color-alt: #E0E0E0;
+  --text-color-alt2: #A0A0A0;
   --font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --text-color: orange;
+    --text-color-alt: #E0E0E0;
+    --text-color-alt2: #A0A0A0;
   }
 }
 

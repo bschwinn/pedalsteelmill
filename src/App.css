@@ -28,3 +28,17 @@
   padding: 16px;
   border-radius: 8px;
 }
+
+.about, .help {
+  padding: 8px;
+  max-width: 616px;
+  color: var(--text-color-alt);
+}
+
+.about-logo {
+  padding: 8px;
+}
+
+.about-content {
+  padding: 16px;
+}
