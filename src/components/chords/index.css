@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  width: 144px;
+  width: 140px;
   padding-left: 12px;
 }
 
@@ -41,7 +41,7 @@
 }
 
 .chord-position .title {
-  padding: 8px 16px 4px 16px;
+  padding: 8px 16px 0 16px;
   color: var(--text-color-alt);
 }
 
@@ -58,66 +58,154 @@
   flex-direction: row;
 }
 
-.chord-position .strings.fret1 {
-  background-position-x: -6px;
-}
-.chord-position .strings.fret2 {
-  background-position-x: -6px;
-}
-.chord-position .strings.fret3 {
-  background-position-x: -40px;
-}
-.chord-position .strings.fret4 {
-  background-position-x: -66px;
-}
-.chord-position .strings.fret5 {
-  background-position-x: -92px;
-}
-.chord-position .strings.fret6 {
-  background-position-x: -120px;
-}
-.chord-position .strings.fret7 {
-  background-position-x: -148px;
-}
-.chord-position .strings.fret8 {
-  background-position-x: -172px;
-}
-.chord-position .strings.fret9 {
-  background-position-x: -184px;
-}
-.chord-position .strings.fret10 {
-  background-position-x: -184px;
-}
-.chord-position .strings.fret11 {
-  background-position-x: -184px;
-}
-.chord-position .strings.fret12 {
-  background-position-x: -184px;
-}
-.chord-position .strings.fret13 {
-  background-position-x: -184px;
-}
-.chord-position .strings.fret14 {
-  background-position-x: -184px;
-}
-
-.chord-position .strings > div {
+.chord-position .strings > .notes {
   padding: 24px 8px 8px 8px;
   width: 20px;
   background-color: #1c1e24;
 }
 
-.chord-position .strings > div > div {
+.chord-position .strings > .notes > div {
   color: var(--text-color-alt2);
   text-align: center;
 }
 
-.chord-position .strings > div > div.active {
+.chord-position .strings > .notes > div.active {
   color: var(--pedal-color-active);
 }
 
+.chord-position .strings .neckarea {
+  height: 100%;
+  position: relative;
+}
+
+.chord-position .strings .neckarea .slide {
+  height: 100%;
+  position: absolute;
+  width: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chord-position .strings .neckarea .slide .filler {
+  height: 32px;
+}
+
+.chord-position .strings .neckarea .slide .nose {
+  height: 12px;
+  background: radial-gradient(
+    circle,
+    #e3e3e3 0%,
+    #b5b5b5 100%
+  );
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.chord-position .strings .neckarea .slide .shaft {
+  height: 100%;
+  /* background-image: var(--panel-bg); */
+  flex-grow: 1;
+  background: linear-gradient(
+    90deg,
+    #787878 0%,
+    #b5b5b5 15%,
+    #e3e3e3 50%,
+    #b5b5b5 85%,
+    #787878 100%
+  );
+  margin-bottom: 4px;
+}
+
+.chord-position .strings.fret0 .neckarea .slide {
+  display: none;
+}
+.chord-position .strings.fret1 {
+  background-position-x: -6px;
+}
+.chord-position .strings.fret1 .neckarea .slide {
+  left: 30px;
+}
+.chord-position .strings.fret2 {
+  background-position-x: -6px;
+}
+.chord-position .strings.fret2 .neckarea .slide {
+  left: 62px;
+}
+.chord-position .strings.fret3 {
+  background-position-x: -40px;
+}
+.chord-position .strings.fret3 .neckarea .slide {
+  left: 58px;
+}
+.chord-position .strings.fret4 {
+  background-position-x: -66px;
+}
+.chord-position .strings.fret4 .neckarea .slide {
+  left: 62px;
+}
+.chord-position .strings.fret5 {
+  background-position-x: -92px;
+}
+.chord-position .strings.fret5 .neckarea .slide {
+  left: 62px;
+}
+.chord-position .strings.fret6 {
+  background-position-x: -120px;
+}
+.chord-position .strings.fret6 .neckarea .slide {
+  left: 60px;
+}
+.chord-position .strings.fret7 {
+  background-position-x: -148px;
+}
+.chord-position .strings.fret7 .neckarea .slide {
+  left: 55px;
+}
+.chord-position .strings.fret8 {
+  background-position-x: -172px;
+}
+.chord-position .strings.fret8 .neckarea .slide {
+  left: 55px;
+}
+.chord-position .strings.fret9 {
+  background-position-x: -184px;
+}
+.chord-position .strings.fret9 .neckarea .slide {
+  left: 63px;
+}
+.chord-position .strings.fret10 {
+  background-position-x: -184px;
+}
+.chord-position .strings.fret10 .neckarea .slide {
+  left: 84px;
+}
+.chord-position .strings.fret11 {
+  background-position-x: -184px;
+}
+.chord-position .strings.fret11 .neckarea .slide {
+  left: 103px;
+}
+.chord-position .strings.fret12 {
+  background-position-x: -184px;
+}
+.chord-position .strings.fret12 .neckarea .slide {
+  left: 121px;
+}
+.chord-position .strings.fret13 {
+  background-position-x: -184px;
+}
+.chord-position .strings.fret13 .neckarea .slide {
+  left: 138px;
+}
+.chord-position .strings.fret14 {
+  background-position-x: -184px;
+}
+.chord-position .strings.fret14 .neckarea .slide {
+  left: 154px;
+}
+
 .chord-position .guitar {
-  padding: 8px 16px;
+  padding: 8px 16px 4px 16px;
 }
 
 /* guitar body styles */
@@ -130,7 +218,7 @@
 
 .chord-position .guitar .body .end {
   height: 17px;
-  width: 4px;
+  width: 3px;
   background-color: var(--text-color-alt);
 }
 

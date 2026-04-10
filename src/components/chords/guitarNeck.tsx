@@ -7,7 +7,7 @@ export type GuitarNeckProps = {
 export const GuitarNeck = ({ position }: GuitarNeckProps) => {
   return (
     <div className={`strings fret${position.fret}`}>
-      <div>
+      <div className="notes">
         {position.strings.map((s, i) => (
           <div
             key={`string_${position.fret}_${position.root}_${s.note}_${i}`}
@@ -16,6 +16,13 @@ export const GuitarNeck = ({ position }: GuitarNeckProps) => {
             {s.enabled ? s.note : "X"}
           </div>
         ))}
+      </div>
+      <div className="neckarea">
+        <div className="slide">
+          <div className="filler"></div>
+          <div className="nose"></div>
+          <div className="shaft"></div>
+        </div>
       </div>
     </div>
   );

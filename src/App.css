@@ -24,7 +24,6 @@
 
 .main-panel {
   background-image: var(--panel-bg);
-  padding: 16px;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -34,6 +33,6 @@
 
 .sub-panel {
   background-image: var(--main-bg);
-  padding: 16px;
+  padding: 12px;
   border-radius: 8px;
 }
