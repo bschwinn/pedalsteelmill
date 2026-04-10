@@ -10,6 +10,8 @@ import { useState } from "react";
 import { TonalitySelector } from "../tonalitySelector";
 import { NoteSelector } from "../noteSelector";
 
+const orientation = 'vertical';
+
 export type PositionedChord = {
   selectedPosition: number;
 } & Chord;
@@ -48,12 +50,16 @@ export const ChordChart = ({ chordRef }: ChordChartProps) => {
             <TonalitySelector
               value={tonality}
               onChange={(t: Tonalities) => setTonality(t)}
+              width="70px"
             />
           </div>
           <div>
             <NoteSelector
               scale={chordRef.chordNames}
               onClick={(note: NoteName) => addChord(note)}
+              orientation={orientation}
+              width="70px"
+              className="twoby"
             />
           </div>
         </div>

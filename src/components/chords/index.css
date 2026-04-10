@@ -2,15 +2,16 @@
 
 .chord-panel {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  flex-direction: row;
+  gap: 24px;
 }
 
 .chord-panel-controls {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 32px;
+  flex-direction: column;
+  gap: 16px;
+  width: 144px;
+  padding-left: 12px;
 }
 
 .chord-panel-controls-label {

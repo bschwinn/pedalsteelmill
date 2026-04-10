@@ -5,16 +5,29 @@ export type NoteSelectorProps = {
   value?: NoteName;
   onChange?: (note: NoteName) => void;
   onClick?: (note: NoteName) => void;
-}
+  className?: string;
+  orientation?: "horizontal" | "vertical";
+  width?: string;
+};
 
-export const NoteSelector = ({ scale, value, onChange, onClick }: NoteSelectorProps) => {
+export const NoteSelector = ({
+  scale,
+  value,
+  onChange,
+  onClick,
+  width,
+  orientation = "horizontal",
+  className = "",
+}: NoteSelectorProps) => {
+  const styles = width ? { width } : {};
 
   return (
-    <div className="button-selector">
-      {scale.map(note => (
+    <div className={`button-selector ${orientation} ${className}`}>
+      {scale.map((note) => (
         <button
           key={note.name}
-          className={value?.name === note.name ? 'selected' : ''}
+          style={{...styles}}
+          className={value?.name === note.name ? "selected" : ""}
           onClick={() => {
             onChange?.(note);
             onClick?.(note);

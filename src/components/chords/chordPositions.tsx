@@ -13,6 +13,8 @@ export type ChordPositionsProps = {
   chordRef: ChordReference;
 };
 
+const orientation = 'vertical';
+
 export const ChordPositions = ({ chordRef }: ChordPositionsProps) => {
   const [tonality, setTonality] = useState<Tonalities>("major");
   const [rootNote, setRootNote] = useState<NoteName>(chordRef.chordNames[0]);
@@ -31,6 +33,7 @@ export const ChordPositions = ({ chordRef }: ChordPositionsProps) => {
             <TonalitySelector
               value={tonality}
               onChange={(t: Tonalities) => setTonality(t)}
+              width="70px"
             />
           </div>
           <div>
@@ -38,6 +41,9 @@ export const ChordPositions = ({ chordRef }: ChordPositionsProps) => {
               scale={chordRef.chordNames}
               value={rootNote}
               onChange={(note: NoteName) => setRootNote(note)}
+              orientation={orientation}
+              width="70px"
+              className="twoby"
             />
           </div>
         </div>
