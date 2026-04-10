@@ -43,7 +43,7 @@ export const ChordPositions = ({ chordRef }: ChordPositionsProps) => {
         </div>
         <div className="chord-panel-list">
           {selectedChord.positions.map((p) => (
-            <ChordPositionCard position={p} key={`${p.root}_${p.fret}`} />
+            <ChordPositionCard tonality={tonality} note={rootNote} position={p} key={`${p.root}_${p.fret}`} />
           ))}
         </div>
       </div>

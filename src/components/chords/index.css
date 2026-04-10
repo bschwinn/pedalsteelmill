@@ -39,14 +39,20 @@
   background-color: #1c1e24;
 }
 
+.chord-position .title {
+  padding: 8px 16px 4px 16px;
+  color: var(--text-color-alt);
+}
+
 /* guitar neck/strings styles */
 
 .chord-position .strings {
-  height: 224px;
+  height: 216px;
   background: url(fretsandstrings.svg);
   background-repeat: no-repeat;
   background-size: 480px;
   background-position-x: -6px;
+  background-position-y: -6px;
   display: flex;
   flex-direction: row;
 }
@@ -95,7 +101,7 @@
 }
 
 .chord-position .strings > div {
-  padding: 30px 8px 8px 8px;
+  padding: 24px 8px 8px 8px;
   width: 20px;
   background-color: #1c1e24;
 }
@@ -110,15 +116,37 @@
 }
 
 .chord-position .guitar {
-  padding: 8px;
+  padding: 8px 16px;
 }
 
 /* guitar body styles */
 
 .chord-position .guitar .body {
-  height: 16px;
-  border: 2px solid var(--text-color-alt);
-  border-radius: 2px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.chord-position .guitar .body .end {
+  height: 17px;
+  width: 4px;
+  background-color: var(--text-color-alt);
+}
+
+.chord-position .guitar .body .middle {
+  height: 14px;
+  border: 1px solid var(--text-color-alt);
+  background-image: var(--main-bg);
+  flex-grow: 1;
+  position: relative;
+}
+
+.chord-position .guitar .body .middle > div {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  font-size: 6px;
+  font-style: italic;
 }
 
 /* guitar knee levers styles */
@@ -227,6 +255,8 @@
   margin: 0 10px 0 0;
   color: #fff;
   padding: 0;
+  font-size: .7rem;
+  text-align: center;
 }
 
 .chord-position .guitar .labels > div.active {
