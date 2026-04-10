@@ -3,10 +3,10 @@ import {
   ChordReference,
   type NoteName,
   type Tonalities,
-} from "../lib/chordReference";
+} from "../../lib/chordReference";
 
-import { TonalitySelector } from "./tonalitySelector";
-import { NoteSelector } from "./noteSelector";
+import { TonalitySelector } from "../tonalitySelector";
+import { NoteSelector } from "../noteSelector";
 import { ChordPositionCard } from "./chordPositionCard";
 
 export type ChordPositionsProps = {

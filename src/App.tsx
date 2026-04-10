@@ -7,8 +7,8 @@ import { Modal } from "./components/modal";
 import { Header } from "./components/header";
 import { About } from "./components/about";
 import { Help } from "./components/help";
-import { ChordPositions } from "./components/chordPositions";
-import { ChordChart } from "./components/chordChart";
+import { ChordPositions } from "./components/chords/chordPositions";
+import { ChordChart } from "./components/chords/chordChart";
 import { ChordReference } from "./lib/chordReference";
 
 function App() {
