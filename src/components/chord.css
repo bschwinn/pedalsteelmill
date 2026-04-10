@@ -1,0 +1,234 @@
+/* chord listing misc styles */
+
+.chord-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chord-panel-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 32px;
+}
+
+.chord-panel-controls-label {
+  width: 116px;
+}
+
+.chord-panel-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+}
+
+.chord-panel-list-empty {
+  padding: 16px;
+  color: var(--text-color-alt2);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.chord-position {
+  width: 220px;
+  color: var(--text-color-alt2);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: #1c1e24;
+}
+
+/* guitar neck/strings styles */
+
+.chord-position .strings {
+  height: 224px;
+  background: url(fretsandstrings.svg);
+  background-repeat: no-repeat;
+  background-size: 480px;
+  background-position-x: -6px;
+  display: flex;
+  flex-direction: row;
+}
+
+.chord-position .strings.fret1 {
+  background-position-x: -6px;
+}
+.chord-position .strings.fret2 {
+  background-position-x: -6px;
+}
+.chord-position .strings.fret3 {
+  background-position-x: -40px;
+}
+.chord-position .strings.fret4 {
+  background-position-x: -66px;
+}
+.chord-position .strings.fret5 {
+  background-position-x: -92px;
+}
+.chord-position .strings.fret6 {
+  background-position-x: -120px;
+}
+.chord-position .strings.fret7 {
+  background-position-x: -148px;
+}
+.chord-position .strings.fret8 {
+  background-position-x: -172px;
+}
+.chord-position .strings.fret9 {
+  background-position-x: -184px;
+}
+.chord-position .strings.fret10 {
+  background-position-x: -184px;
+}
+.chord-position .strings.fret11 {
+  background-position-x: -184px;
+}
+.chord-position .strings.fret12 {
+  background-position-x: -184px;
+}
+.chord-position .strings.fret13 {
+  background-position-x: -184px;
+}
+.chord-position .strings.fret14 {
+  background-position-x: -184px;
+}
+
+.chord-position .strings > div {
+  padding: 30px 8px 8px 8px;
+  width: 20px;
+  background-color: #1c1e24;
+}
+
+.chord-position .strings > div > div {
+  color: var(--text-color-alt2);
+  text-align: center;
+}
+
+.chord-position .strings > div > div.active {
+  color: var(--pedal-color-active);
+}
+
+.chord-position .guitar {
+  padding: 8px;
+}
+
+/* guitar body styles */
+
+.chord-position .guitar .body {
+  height: 16px;
+  border: 2px solid var(--text-color-alt);
+  border-radius: 2px;
+}
+
+/* guitar knee levers styles */
+
+.chord-position .guitar .levers {
+  padding: 0 8px 4px 8px;
+  display: flex;
+  flex-direction: row;
+}
+
+.chord-position .guitar .levers .lever,
+.chord-position .guitar .levers .leverup {
+  height: 34px;
+  margin: 0;
+  padding: 0;
+  width: 4%;
+}
+.chord-position .guitar .levers .leverup {
+  height: 28px;
+  width: 12%;
+  padding: 0;
+  margin: 5px 0 0 0;
+  border-top: 3px solid var(--text-color-alt);
+}
+.chord-position .guitar .levers .lever.spacer {
+  width: 60%;
+}
+.chord-position .guitar .levers .leverup.notinstalled {
+  border-top: 0;
+}
+.chord-position .guitar .levers .lever.leftkneeleft,
+.chord-position .guitar .levers .lever.rightkneeleft {
+  position: relative;
+  border-left: solid 2px var(--text-color-alt);
+  left: 0;
+}
+.chord-position .guitar .levers .lever.leftkneeright,
+.chord-position .guitar .levers .lever.rightkneeright {
+  position: relative;
+  border-right: solid 2px var(--text-color-alt);
+  right: 0;
+}
+.chord-position .guitar .levers .leftkneeleft.active,
+.chord-position .guitar .levers .rightkneeleft.active {
+  transform: rotate(10deg);
+  -webkit-transform: rotate(10deg);
+  -moz-transform: rotate(10deg);
+  transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  border-color: var(--pedal-color-active);
+  color: var(--pedal-color-active);
+}
+.chord-position .guitar .levers .leftkneeup.active {
+  transform: skew(4deg) rotate(8deg);
+  -webkit-transform: skew(4deg) rotate(8deg);
+  -moz-transform: skew(4deg) rotate(8deg);
+  transform-origin: 0 100%;
+  -webkit-transform-origin: 0 100%;
+  -moz-transform-origin: 0 100%;
+  border-color: var(--pedal-color-active);
+  color: var(--pedal-color-active);
+  height: 32px;
+  margin-top: 1px;
+}
+.chord-position .guitar .levers .leftkneeright.active,
+.chord-position .guitar .levers .rightkneeright.active {
+  transform: rotate(-10deg);
+  -webkit-transform: rotate(-10deg);
+  -moz-transform: rotate(-10deg);
+  transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  border-color: var(--pedal-color-active);
+  color: var(--pedal-color-active);
+}
+
+/* guitar foot pedal styles */
+
+.chord-position .guitar .pedals {
+  height: 20px;
+}
+
+.chord-position .guitar .pedals,
+.chord-position .guitar .labels {
+  display: flex;
+  flex-direction: row;
+}
+
+.chord-position .guitar .pedals > div {
+  border-top: 3px solid var(--text-color-alt);
+  width: 12px;
+  margin: 0 10px 0 0;
+}
+
+.chord-position .guitar .pedals > div.active {
+  border-top: none;
+  padding-top: 30px;
+  background-color: var(--pedal-color-active);
+  color: var(--pedal-color-active);
+  transform: perspective(120px) rotateX(51deg) translateY(-13px);
+}
+
+.chord-position .guitar .labels > div {
+  width: 12px;
+  margin: 0 10px 0 0;
+  color: #fff;
+  padding: 0;
+}
+
+.chord-position .guitar .labels > div.active {
+  color: var(--pedal-color-active);
+}

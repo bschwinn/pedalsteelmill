@@ -108,4 +108,5 @@ rm ./tmp.png
 # copy logo files
 cp ./assets/pedalsteelmill-logo-full.svg ./public/logo-full.svg
 cp ./assets/pedalsteelmill-icon-180.svg ./public/logo-compact.svg
+cp ./assets/pedalsteelmill-neck.svg ./public/fretsandstrings.svg
 ```

@@ -9,10 +9,14 @@ import { About } from "./components/about";
 import { Help } from "./components/help";
 import { ChordPositions } from "./components/chordPositions";
 import { ChordChart } from "./components/chordChart";
+import { ChordReference } from "./lib/chordReference";
 
 function App() {
   const [showAbout, setShowAbout] = useState<boolean>(false);
   const [showHelp, setShowHelp] = useState<boolean>(false);
+
+  const chordReference = new ChordReference();
+  chordReference.setTuning('E9');
 
   return (
     <div className="faceplate">
@@ -20,9 +24,9 @@ function App() {
       <Header onAboutClick={() => setShowAbout(true)} onHelpClick={() => setShowHelp(true)} />
 
       <div className="main-panel">
-        <ChordPositions />
+        <ChordPositions chordRef={chordReference} />
 
-        <ChordChart />
+        <ChordChart chordRef={chordReference} />
       </div>
 
       <Modal

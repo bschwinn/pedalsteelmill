@@ -1,4 +1,4 @@
-export type Tonalities = 'major' | 'minor';
+import type { Tonalities } from "../lib/chordReference";
 
 export type TonalitySelectorProps = {
   value: Tonalities;

@@ -1,6 +1,9 @@
+@import "chord.css";
+
 /* help and about */
 
-.about, .help {
+.about,
+.help {
   padding: 8px;
   max-width: 616px;
   color: var(--text-color-alt);
@@ -20,32 +23,6 @@
   gap: 15px;
 }
 
-/* chord positions and chart */
-
-.chord-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.chord-panel-controls {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 32px;
-}
-
-.chord-panel-controls-label {
-  width: 116px;
-}
-
-.chord-panel-list-empty {
-  padding: 16px;
-  color: var(--text-color-alt2);
-  border: 1px solid var(--text-color-alt2);
-  border-radius: 4px;
-}
-
 /* modal overlay */
 
 .modalBackdrop {
@@ -54,10 +31,10 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
 }
 
 .modalWindow {
@@ -85,16 +62,22 @@
 
 .button-selector button {
   cursor: pointer;
-  border: 1px solid var(--text-color-alt2);
+  border: 1px solid var(--border-color);
   color: var(--text-color-alt2);
   padding: 8px 12px;
   background-color: #282828;
 }
 
 .button-selector button.selected {
-  color: #fefefe;
-  background-color: #4a9eff;
-  border-color: #4a9eff;
+  color: #282828;
+  font-weight: bold;
+  border-color: #c09820;
+  background-image: radial-gradient(
+    circle,
+    #e8c040 0%,
+    #d4a824 75%,
+    #c09820 90%
+  );
 }
 
 .button-selector button + button {

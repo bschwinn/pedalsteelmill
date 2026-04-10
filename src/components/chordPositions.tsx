@@ -1,9 +1,26 @@
 import { useState } from "react";
-import { TonalitySelector, type Tonalities } from "./tonalitySelector";
+import {
+  ChordReference,
+  type NoteName,
+  type Tonalities,
+} from "../lib/chordReference";
 
-export const ChordPositions = () => {
-  const [tonality, setTonality] = useState<Tonalities>('major');
-  const [rootNote, setRootNote] = useState<string>('E');
+import { TonalitySelector } from "./tonalitySelector";
+import { NoteSelector } from "./noteSelector";
+import { ChordPositionCard } from "./chordPositionCard";
+
+export type ChordPositionsProps = {
+  chordRef: ChordReference;
+};
+
+export const ChordPositions = ({ chordRef }: ChordPositionsProps) => {
+  const [tonality, setTonality] = useState<Tonalities>("major");
+  const [rootNote, setRootNote] = useState<NoteName>(chordRef.chordNames[0]);
+
+  const selectedChord =
+    tonality === "major"
+      ? chordRef.majorChords[rootNote.name]
+      : chordRef.minorChords[rootNote.name];
 
   return (
     <section className="sub-panel">
@@ -11,14 +28,25 @@ export const ChordPositions = () => {
         <div className="chord-panel-controls">
           <div className="chord-panel-controls-label">Chord Positions</div>
           <div>
-            <TonalitySelector value={tonality} onChange={(t: Tonalities) => setTonality(t)} />
+            <TonalitySelector
+              value={tonality}
+              onChange={(t: Tonalities) => setTonality(t)}
+            />
           </div>
-          <div>A B C D E F G</div>
+          <div>
+            <NoteSelector
+              scale={chordRef.chordNames}
+              value={rootNote}
+              onChange={(note: NoteName) => setRootNote(note)}
+            />
+          </div>
         </div>
         <div className="chord-panel-list">
-          positions for chord: {rootNote}{tonality}
+          {selectedChord.positions.map((p) => (
+            <ChordPositionCard position={p} key={`${p.root}_${p.fret}`} />
+          ))}
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
