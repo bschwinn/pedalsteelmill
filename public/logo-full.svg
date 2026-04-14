@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="440" viewBox="0 0 600 440" role="img">
+  <title>Pedal Steel Mill — Full Logo</title>
+  <desc>PedalSteelMill full logo. PEDAL in bright steel, STEEL MILL in wound-string gold, 10 strings, chrome slide bar, 3 pedals.</desc>
+
+  <defs>
+    <linearGradient id="chr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#787878"/>
+      <stop offset="28%"  stop-color="#efefef"/>
+      <stop offset="55%"  stop-color="#d4d4d4"/>
+      <stop offset="100%" stop-color="#848484"/>
+    </linearGradient>
+    <linearGradient id="brH" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#5a5a5a"/>
+      <stop offset="35%"  stop-color="#c8c8c8"/>
+      <stop offset="65%"  stop-color="#b0b0b0"/>
+      <stop offset="100%" stop-color="#5a5a5a"/>
+    </linearGradient>
+    <linearGradient id="brV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#b0b0b0"/>
+      <stop offset="40%"  stop-color="#e0e0e0"/>
+      <stop offset="100%" stop-color="#888888"/>
+    </linearGradient>
+    <linearGradient id="neck" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#363636"/>
+      <stop offset="100%" stop-color="#202020"/>
+    </linearGradient>
+    <linearGradient id="panod" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#484848"/>
+      <stop offset="100%" stop-color="#282828"/>
+    </linearGradient>
+    <linearGradient id="pface" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#383838"/>
+      <stop offset="100%" stop-color="#1c1c1c"/>
+    </linearGradient>
+    <linearGradient id="wmSteel" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#909090"/>
+      <stop offset="35%"  stop-color="#f0f0f0"/>
+      <stop offset="65%"  stop-color="#d8d8d8"/>
+      <stop offset="100%" stop-color="#909090"/>
+    </linearGradient>
+    <linearGradient id="wmGold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#8a6a10"/>
+      <stop offset="30%"  stop-color="#d4a824"/>
+      <stop offset="55%"  stop-color="#e8c040"/>
+      <stop offset="80%"  stop-color="#c09820"/>
+      <stop offset="100%" stop-color="#8a6a10"/>
+    </linearGradient>
+    <linearGradient id="xbar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#2c2e32"/>
+      <stop offset="25%"  stop-color="#585a60"/>
+      <stop offset="50%"  stop-color="#686a70"/>
+      <stop offset="75%"  stop-color="#585a60"/>
+      <stop offset="100%" stop-color="#2c2e32"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="440" rx="20" fill="#1c1e24"/>
+  <rect x="2" y="2" width="596" height="436" rx="18" fill="none" stroke="#2a2c34" stroke-width="1"/>
+
+  <text x="300" y="82" text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="56" font-weight="600" letter-spacing="12"
+        fill="url(#wmSteel)">PEDAL</text>
+  <rect x="100" y="93" width="400" height="1.5" fill="#2e3240"/>
+  <text x="300" y="124" text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="26" font-weight="300" letter-spacing="10"
+        fill="url(#wmGold)">STEEL MILL</text>
+  <rect x="100" y="133" width="400" height="1" fill="#242630"/>
+  <text x="300" y="151" text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="11" font-weight="400" letter-spacing="5"
+        fill="#4a9eff">CHORD REFERENCE</text>
+
+  <rect x="60"  y="170" width="480" height="82" rx="6" fill="url(#neck)"/>
+  <rect x="60"  y="170" width="480" height="8"  rx="4" fill="url(#brH)"/>
+  <rect x="48"  y="172" width="15"  height="78" rx="3" fill="url(#brV)"/>
+  <rect x="537" y="172" width="15"  height="78" rx="3" fill="url(#brV)"/>
+
+  <line x1="63" y1="179" x2="537" y2="179" stroke="#a8a8a8" stroke-width="1.0"/>
+  <line x1="63" y1="187" x2="537" y2="187" stroke="#c09820" stroke-width="1.4"/>
+  <line x1="63" y1="195" x2="537" y2="195" stroke="#a8a8a8" stroke-width="1.0"/>
+  <line x1="63" y1="203" x2="537" y2="203" stroke="#c09820" stroke-width="1.4"/>
+  <line x1="63" y1="211" x2="537" y2="211" stroke="#a8a8a8" stroke-width="1.0"/>
+  <line x1="63" y1="219" x2="537" y2="219" stroke="#c09820" stroke-width="1.4"/>
+  <line x1="63" y1="227" x2="537" y2="227" stroke="#a8a8a8" stroke-width="1.0"/>
+  <line x1="63" y1="235" x2="537" y2="235" stroke="#c09820" stroke-width="1.4"/>
+  <line x1="63" y1="243" x2="537" y2="243" stroke="#a8a8a8" stroke-width="1.0"/>
+  <line x1="63" y1="251" x2="537" y2="251" stroke="#c09820" stroke-width="1.4"/>
+
+  <line x1="140" y1="170" x2="140" y2="252" stroke="#333333" stroke-width="1.5"/>
+  <line x1="236" y1="170" x2="236" y2="252" stroke="#333333" stroke-width="1.5"/>
+  <line x1="332" y1="170" x2="332" y2="252" stroke="#333333" stroke-width="1.5"/>
+  <line x1="428" y1="170" x2="428" y2="252" stroke="#333333" stroke-width="1.5"/>
+
+  <circle cx="101" cy="179" r="6" fill="#4a9eff"/>
+  <circle cx="101" cy="195" r="6" fill="#4a9eff"/>
+  <circle cx="101" cy="211" r="6" fill="#4a9eff"/>
+  <circle cx="101" cy="227" r="6" fill="#4a9eff"/>
+  <circle cx="101" cy="243" r="6" fill="#4a9eff"/>
+
+  <rect x="248" y="166" width="24" height="90" rx="5" fill="url(#chr)"/>
+  <rect x="252" y="166" width="8"  height="90" rx="3" fill="#ffffff" opacity="0.26"/>
+
+  <rect x="100" y="262" width="400" height="6" rx="3" fill="url(#xbar)"/>
+  <rect x="100" y="262" width="400" height="1.5" rx="1" fill="#787a80" opacity="0.5"/>
+  <circle cx="118" cy="265" r="3.5" fill="#242628" stroke="#585a5e" stroke-width="1"/>
+  <circle cx="482" cy="265" r="3.5" fill="#242628" stroke="#585a5e" stroke-width="1"/>
+
+  <line x1="196" y1="268" x2="196" y2="275" stroke="#5a5c62" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="300" y1="268" x2="300" y2="275" stroke="#5a5c62" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="404" y1="268" x2="404" y2="275" stroke="#5a5c62" stroke-width="2.5" stroke-linecap="round"/>
+
+  <rect x="177" y="275" width="38" height="10" rx="2" fill="url(#panod)"/>
+  <rect x="177" y="283" width="38" height="54" rx="3" fill="url(#pface)"/>
+  <rect x="180" y="286" width="32" height="47" rx="2" fill="#222222"/>
+  <line x1="183" y1="294" x2="207" y2="294" stroke="#3a3a3a" stroke-width="1.5"/>
+  <line x1="183" y1="303" x2="207" y2="303" stroke="#3a3a3a" stroke-width="1.5"/>
+  <line x1="183" y1="312" x2="207" y2="312" stroke="#3a3a3a" stroke-width="1.5"/>
+  <line x1="183" y1="321" x2="207" y2="321" stroke="#3a3a3a" stroke-width="1.5"/>
+  <text x="196" y="356" text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="13" font-weight="500" fill="#909090">A</text>
+
+  <rect x="281" y="275" width="38" height="10" rx="2" fill="url(#panod)"/>
+  <rect x="281" y="283" width="38" height="54" rx="3" fill="url(#pface)"/>
+  <rect x="284" y="286" width="32" height="47" rx="2" fill="#222222"/>
+  <line x1="287" y1="294" x2="311" y2="294" stroke="#3a3a3a" stroke-width="1.5"/>
+  <line x1="287" y1="303" x2="311" y2="303" stroke="#3a3a3a" stroke-width="1.5"/>
+  <line x1="287" y1="312" x2="311" y2="312" stroke="#3a3a3a" stroke-width="1.5"/>
+  <line x1="287" y1="321" x2="311" y2="321" stroke="#3a3a3a" stroke-width="1.5"/>
+  <text x="300" y="356" text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="13" font-weight="500" fill="#909090">B</text>
+
+  <rect x="385" y="275" width="38" height="10" rx="2" fill="url(#panod)"/>
+  <rect x="385" y="283" width="38" height="54" rx="3" fill="url(#pface)"/>
+  <rect x="388" y="286" width="32" height="47" rx="2" fill="#222222"/>
+  <line x1="391" y1="294" x2="415" y2="294" stroke="#3a3a3a" stroke-width="1.5"/>
+  <line x1="391" y1="303" x2="415" y2="303" stroke="#3a3a3a" stroke-width="1.5"/>
+  <line x1="391" y1="312" x2="415" y2="312" stroke="#3a3a3a" stroke-width="1.5"/>
+  <line x1="391" y1="321" x2="415" y2="321" stroke="#3a3a3a" stroke-width="1.5"/>
+  <text x="404" y="356" text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="13" font-weight="500" fill="#909090">C</text>
+
+</svg>

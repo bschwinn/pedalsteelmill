@@ -1,0 +1,38 @@
+:root {
+  --main-bg: url('blackmetal.png');
+  --panel-bg: url('metal.png');
+  --section-bg: #1c1e24;
+  --section-hover: #313131;
+  --button-bg: radial-gradient(
+    circle,
+    #e8c040 0%,
+    #d4a824 75%,
+    #c09820 90%
+  );
+  --button-border-color: #c09820;
+  --border-color: #A0A0A0;
+  --text-color: #e8c040;
+  --text-color-alt: #E0E0E0;
+  --text-color-alt2: var(--border-color);
+  --font-family: 'Helvetica Neue', Arial, sans-serif;
+  --pedal-color: var(--border-color);
+  --pedal-color-active: #4a9eff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #e8c040;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  color: var(--text-color);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

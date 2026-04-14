@@ -1,0 +1,113 @@
+import type {
+  Chord,
+  ChordPosition,
+  ChordReference,
+  NoteName,
+  Tonalities,
+} from "../../lib/chordReference";
+
+import { useState } from "react";
+
+import { TonalitySelector } from "../tonalitySelector";
+import { NoteSelector } from "../noteSelector";
+import { ChordChartCard } from "./chordChartCard";
+
+const orientation = "vertical";
+
+export type PositionedChord = {
+  selectedPosition: ChordPosition;
+} & Chord;
+
+export type ChordChartProps = {
+  chordRef: ChordReference;
+};
+
+export const ChordChart = ({ chordRef }: ChordChartProps) => {
+  const [tonality, setTonality] = useState<Tonalities>("major");
+  const [chords, setChords] = useState<PositionedChord[]>([]);
+
+  const addChord = (note: NoteName) => {
+    const selectedChord =
+      tonality === "major"
+        ? chordRef.majorChords[note.name]
+        : chordRef.minorChords[note.name];
+    setChords((prev) => {
+      return [
+        ...prev,
+        {
+          ...selectedChord,
+          selectedPosition: selectedChord.positions[0],
+        },
+      ];
+    });
+  };
+
+  const removeChord = (chordIndex: number) => {
+    const newChords = [...chords];
+    newChords.splice(chordIndex, 1);
+    setChords(newChords);
+  };
+
+  const changePosition = (chordIndex: number, newPosition: number) => {
+    const newChords = [...chords];
+    const ch = newChords[chordIndex];
+    ch.selectedPosition = ch.positions[newPosition];
+    setChords(newChords);
+  };
+
+  const changeTonality = (chordIndex: number, newTonality: Tonalities) => {
+    const newChords = [...chords];
+    const existingChord = newChords[chordIndex];
+    const newChord = newTonality === "major"
+        ? chordRef.majorChords[existingChord.name]
+        : chordRef.minorChords[existingChord.name];
+    newChords[chordIndex] = { ...newChord, selectedPosition: newChord.positions[0] }      
+    setChords(newChords);
+  };
+
+  return (
+    <section className="sub-panel">
+      <div className="chord-panel">
+        <div className="chord-panel-controls">
+          <div className="chord-panel-controls-label">Chord Chart</div>
+          <div>
+            <TonalitySelector
+              value={tonality}
+              onChange={(t: Tonalities) => setTonality(t)}
+              orientation="vertical"
+              className="twoby"
+            />
+          </div>
+          <div>
+            <NoteSelector
+              scale={chordRef.chordNames}
+              onClick={(note: NoteName) => addChord(note)}
+              orientation={orientation}
+              className="twoby"
+              prefix="+ "
+            />
+          </div>
+        </div>
+        <div className="chord-panel-list">
+          {chords.length === 0 && (
+            <div className="chord-panel-list-empty">
+              Drag notes from above to assemble a chord progression.
+            </div>
+          )}
+          {chords.length > 0 &&
+            chords.map((ch, i) => (
+              <ChordChartCard
+                chord={ch}
+                position={ch.selectedPosition}
+                onDelete={() => removeChord(i)}
+                onChangePosition={(newPos: number) => changePosition(i, newPos)}
+                onChangeTonality={(newTonality: Tonalities) => changeTonality(i, newTonality)}
+                key={`${ch.name}_${ch.selectedPosition}_${i}`}
+                id={`${ch.name}_${ch.selectedPosition}_${i}`}
+              />
+            ))}
+        </div>
+      </div>
+    </section>
+  );
+};

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img">
+  <title>Pedal Steel Mill — App Icon 512x512</title>
+  <desc>PedalSteelMill app icon 512x512. PEDAL in steel, STEEL MILL in gold, 10 strings, slide bar, chord dots.</desc>
+
+  <defs>
+    <linearGradient id="chr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#787878"/>
+      <stop offset="28%"  stop-color="#efefef"/>
+      <stop offset="55%"  stop-color="#d4d4d4"/>
+      <stop offset="100%" stop-color="#848484"/>
+    </linearGradient>
+    <linearGradient id="brH" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#5a5a5a"/>
+      <stop offset="35%"  stop-color="#c8c8c8"/>
+      <stop offset="65%"  stop-color="#b0b0b0"/>
+      <stop offset="100%" stop-color="#5a5a5a"/>
+    </linearGradient>
+    <linearGradient id="brV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#b0b0b0"/>
+      <stop offset="40%"  stop-color="#e0e0e0"/>
+      <stop offset="100%" stop-color="#888888"/>
+    </linearGradient>
+    <linearGradient id="neck" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#363636"/>
+      <stop offset="100%" stop-color="#202020"/>
+    </linearGradient>
+    <linearGradient id="wmSteel" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#909090"/>
+      <stop offset="35%"  stop-color="#f0f0f0"/>
+      <stop offset="65%"  stop-color="#d8d8d8"/>
+      <stop offset="100%" stop-color="#909090"/>
+    </linearGradient>
+    <linearGradient id="wmGold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#8a6a10"/>
+      <stop offset="30%"  stop-color="#d4a824"/>
+      <stop offset="55%"  stop-color="#e8c040"/>
+      <stop offset="80%"  stop-color="#c09820"/>
+      <stop offset="100%" stop-color="#8a6a10"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="#1c1e24"/>
+  <rect x="2" y="2" width="508" height="508" rx="110" fill="none" stroke="#2a2c34" stroke-width="2"/>
+
+  <text x="256" y="130" text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="82" font-weight="600" letter-spacing="14"
+        fill="url(#wmSteel)">PEDAL</text>
+  <rect x="56" y="142" width="400" height="2" fill="#2e3240"/>
+  <text x="256" y="180" text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="36" font-weight="300" letter-spacing="12"
+        fill="url(#wmGold)">STEEL MILL</text>
+
+  <rect x="36"  y="212" width="440" height="100" rx="8" fill="url(#neck)"/>
+  <rect x="36"  y="212" width="440" height="10"  rx="5" fill="url(#brH)"/>
+  <rect x="22"  y="214" width="17"  height="96"  rx="4" fill="url(#brV)"/>
+  <rect x="473" y="214" width="17"  height="96"  rx="4" fill="url(#brV)"/>
+
+  <line x1="39" y1="223" x2="473" y2="223" stroke="#a8a8a8" stroke-width="1.2"/>
+  <line x1="39" y1="233" x2="473" y2="233" stroke="#c09820" stroke-width="1.6"/>
+  <line x1="39" y1="243" x2="473" y2="243" stroke="#a8a8a8" stroke-width="1.2"/>
+  <line x1="39" y1="253" x2="473" y2="253" stroke="#c09820" stroke-width="1.6"/>
+  <line x1="39" y1="263" x2="473" y2="263" stroke="#a8a8a8" stroke-width="1.2"/>
+  <line x1="39" y1="273" x2="473" y2="273" stroke="#c09820" stroke-width="1.6"/>
+  <line x1="39" y1="283" x2="473" y2="283" stroke="#a8a8a8" stroke-width="1.2"/>
+  <line x1="39" y1="293" x2="473" y2="293" stroke="#c09820" stroke-width="1.6"/>
+  <line x1="39" y1="303" x2="473" y2="303" stroke="#a8a8a8" stroke-width="1.2"/>
+  <line x1="39" y1="313" x2="473" y2="313" stroke="#c09820" stroke-width="1.6"/>
+
+  <line x1="148" y1="212" x2="148" y2="312" stroke="#333333" stroke-width="2"/>
+  <line x1="256" y1="212" x2="256" y2="312" stroke="#333333" stroke-width="2"/>
+  <line x1="364" y1="212" x2="364" y2="312" stroke="#333333" stroke-width="2"/>
+
+  <circle cx="92"  cy="223" r="8" fill="#4a9eff"/>
+  <circle cx="92"  cy="243" r="8" fill="#4a9eff"/>
+  <circle cx="92"  cy="263" r="8" fill="#4a9eff"/>
+  <circle cx="92"  cy="283" r="8" fill="#4a9eff"/>
+  <circle cx="92"  cy="303" r="8" fill="#4a9eff"/>
+
+  <rect x="192" y="206" width="28" height="112" rx="6" fill="url(#chr)"/>
+  <rect x="196" y="206" width="9"  height="112" rx="4" fill="#ffffff" opacity="0.26"/>
+
+  <text x="256" y="420" text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="20" font-weight="400" letter-spacing="6"
+        fill="#4a9eff">CHORD REFERENCE</text>
+  <line x1="76" y1="430" x2="436" y2="430" stroke="#4a9eff" stroke-width="1" opacity="0.3"/>
+
+</svg>
