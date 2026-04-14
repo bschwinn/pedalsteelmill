@@ -23,7 +23,8 @@ export const ChordPositionCard = ({ chord, position }: ChordPositionCardProps) =
 };
 
 const PositionTitle = ({ chord, position }: ChordPositionCardProps) => {
+  const title = `Fret ${position.fret} - ${chord.label}${chord.tonality === 'major' ? 'Maj' : 'min'}`;
   return (
-    <div className="title">Fret {position.fret} - {chord.label}{chord.tonality === 'major' ? 'Maj' : 'min'}</div>
+    <div className="title">{title}</div>
   );
 };

@@ -7,7 +7,7 @@ export type NoteSelectorProps = {
   onClick?: (note: NoteName) => void;
   className?: string;
   orientation?: "horizontal" | "vertical";
-  width?: string;
+  prefix?: string;
 };
 
 export const NoteSelector = ({
@@ -15,25 +15,23 @@ export const NoteSelector = ({
   value,
   onChange,
   onClick,
-  width,
   orientation = "horizontal",
   className = "",
+  prefix = "",
 }: NoteSelectorProps) => {
-  const styles = width ? { width } : {};
 
   return (
     <div className={`button-selector ${orientation} ${className}`}>
       {scale.map((note) => (
         <button
-          key={note.name}
-          style={{...styles}}
+          key={`notesel_${note.name}`}
           className={value?.name === note.name ? "selected" : ""}
           onClick={() => {
             onChange?.(note);
             onClick?.(note);
           }}
         >
-          {note.label}
+          {prefix}{note.label}
         </button>
       ))}
     </div>

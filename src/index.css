@@ -1,6 +1,15 @@
 :root {
   --main-bg: url('blackmetal.png');
   --panel-bg: url('metal.png');
+  --section-bg: #1c1e24;
+  --section-hover: #313131;
+  --button-bg: radial-gradient(
+    circle,
+    #e8c040 0%,
+    #d4a824 75%,
+    #c09820 90%
+  );
+  --button-border-color: #c09820;
   --border-color: #A0A0A0;
   --text-color: #e8c040;
   --text-color-alt: #E0E0E0;

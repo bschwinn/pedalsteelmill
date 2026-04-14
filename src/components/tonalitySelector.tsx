@@ -5,18 +5,17 @@ export type TonalitySelectorProps = {
   onChange: (tonality: Tonalities) => void;
   orientation?: 'horizontal' | 'vertical';
   width?: string;
+  className?: string;
 }
 
-export const TonalitySelector = ({ value, onChange, orientation = 'horizontal', width }: TonalitySelectorProps) => {
+export const TonalitySelector = ({ value, onChange, orientation = 'horizontal', className = '' }: TonalitySelectorProps) => {
   const options: Tonalities[] = ['major', 'minor'];
-  const styles = width ? { width } : {};
 
   return (
-    <div className={`button-selector ${orientation}`}>
+    <div className={`button-selector ${orientation} ${className}`}>
       {options.map((t) => (
         <button
           key={t}
-          style={{...styles}}
           className={value === t ? 'selected' : ''}
           onClick={() => onChange(t)}
         >

@@ -33,7 +33,8 @@ export const ChordPositions = ({ chordRef }: ChordPositionsProps) => {
             <TonalitySelector
               value={tonality}
               onChange={(t: Tonalities) => setTonality(t)}
-              width="70px"
+              orientation="vertical"
+              className="twoby"
             />
           </div>
           <div>
@@ -42,7 +43,6 @@ export const ChordPositions = ({ chordRef }: ChordPositionsProps) => {
               value={rootNote}
               onChange={(note: NoteName) => setRootNote(note)}
               orientation={orientation}
-              width="70px"
               className="twoby"
             />
           </div>
