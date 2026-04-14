@@ -83,7 +83,7 @@
 
 .chord-position .strings {
   height: 216px;
-  background: url(fretsandstrings.svg);
+  background-image: var(--fretboard-bg);
   background-repeat: no-repeat;
   background-size: 480px;
   background-position-x: -6px;
