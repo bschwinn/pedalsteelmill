@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { type Chord, type ChordPosition, type Tonalities } from "../../lib/chordReference";
 
 import { GuitarBody } from "./guitarBody";
@@ -12,6 +13,8 @@ export type ChordChartCardProps = {
   onDelete: () => void;
   onChangePosition: (position: number) => void;
   onChangeTonality: (tonality: Tonalities) => void;
+  onDragStart?: () => void;
+  onDrop?: () => void;
 };
 
 export const ChordChartCard = ({
@@ -21,9 +24,30 @@ export const ChordChartCard = ({
   onChangePosition,
   onChangeTonality,
   onDelete,
+  onDragStart,
+  onDrop,
 }: ChordChartCardProps) => {
+  const [isDragOver, setIsDragOver] = useState(false);
   return (
-    <div className="chord-position">
+    <div
+      className={`chord-position${isDragOver ? " drag-over" : ""}`}
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.effectAllowed = "move";
+        onDragStart?.();
+      }}
+      onDragOver={(e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+        setIsDragOver(true);
+      }}
+      onDragLeave={() => setIsDragOver(false)}
+      onDrop={(e) => {
+        e.preventDefault();
+        setIsDragOver(false);
+        onDrop?.();
+      }}
+    >
       <PositionTitle
         id={id}
         chord={chord}
