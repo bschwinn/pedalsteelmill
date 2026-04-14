@@ -1,4 +1,4 @@
-import { type ChordPosition, type NoteName, type Tonalities } from "../../lib/chordReference";
+import { type Chord, type ChordPosition } from "../../lib/chordReference";
 
 import { GuitarBody } from "./guitarBody";
 import { GuitarLevers } from "./guitarLevers";
@@ -6,14 +6,13 @@ import { GuitarNeck } from "./guitarNeck";
 import { GuitarPedals } from "./guitarPedals";
 
 export type ChordPositionCardProps = {
-  tonality: Tonalities;
-  note: NoteName;
+  chord: Chord;
   position: ChordPosition;
 };
 
-export const ChordPositionCard = ({ tonality, note, position }: ChordPositionCardProps) => {
+export const ChordPositionCard = ({ chord, position }: ChordPositionCardProps) => {
   return <div className="chord-position">
-    <PositionTitle note={note} tonality={tonality} position={position} />
+    <PositionTitle chord={chord} position={position} />
     <GuitarNeck position={position} />
     <div className="guitar">
       <GuitarBody />
@@ -23,8 +22,8 @@ export const ChordPositionCard = ({ tonality, note, position }: ChordPositionCar
   </div>;
 };
 
-const PositionTitle = ({ tonality, note, position }: ChordPositionCardProps) => {
+const PositionTitle = ({ chord, position }: ChordPositionCardProps) => {
   return (
-    <div className="title">Fret {position.fret} - {note.label}{tonality === 'major' ? 'Maj' : 'min'}</div>
+    <div className="title">Fret {position.fret} - {chord.label}{chord.tonality === 'major' ? 'Maj' : 'min'}</div>
   );
 };
