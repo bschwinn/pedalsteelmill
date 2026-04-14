@@ -1,6 +1,6 @@
 :root {
-  --main-bg: url('blackmetal.png');
-  --panel-bg: url('metal.png');
+  --main-bg: url('/pedalsteelmill/blackmetal.png');
+  --panel-bg: url('/pedalsteelmill/metal.png');
   --section-bg: #1c1e24;
   --section-hover: #313131;
   --button-bg: radial-gradient(
