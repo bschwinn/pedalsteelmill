@@ -38,6 +38,12 @@
   border: 1px solid var(--border-color);
   border-radius: 4px;
   background-color: var(--section-bg);
+  cursor: grab;
+}
+
+.chord-position.drag-over {
+  outline: 2px solid var(--pedal-color-active);
+  outline-offset: 2px;
 }
 
 .chord-position .title {

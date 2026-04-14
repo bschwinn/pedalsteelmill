@@ -6,7 +6,7 @@ import type {
   Tonalities,
 } from "../../lib/chordReference";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { TonalitySelector } from "../tonalitySelector";
 import { NoteSelector } from "../noteSelector";
@@ -25,6 +25,7 @@ export type ChordChartProps = {
 export const ChordChart = ({ chordRef }: ChordChartProps) => {
   const [tonality, setTonality] = useState<Tonalities>("major");
   const [chords, setChords] = useState<PositionedChord[]>([]);
+  const dragIndexRef = useRef<number | null>(null);
 
   const addChord = (note: NoteName) => {
     const selectedChord =
@@ -53,6 +54,16 @@ export const ChordChart = ({ chordRef }: ChordChartProps) => {
     const ch = newChords[chordIndex];
     ch.selectedPosition = ch.positions[newPosition];
     setChords(newChords);
+  };
+
+  const reorderChords = (dropIndex: number) => {
+    const dragIndex = dragIndexRef.current;
+    if (dragIndex === null || dragIndex === dropIndex) return;
+    const newChords = [...chords];
+    const [dragged] = newChords.splice(dragIndex, 1);
+    newChords.splice(dropIndex, 0, dragged);
+    setChords(newChords);
+    dragIndexRef.current = null;
   };
 
   const changeTonality = (chordIndex: number, newTonality: Tonalities) => {
@@ -102,6 +113,8 @@ export const ChordChart = ({ chordRef }: ChordChartProps) => {
                 onDelete={() => removeChord(i)}
                 onChangePosition={(newPos: number) => changePosition(i, newPos)}
                 onChangeTonality={(newTonality: Tonalities) => changeTonality(i, newTonality)}
+                onDragStart={() => { dragIndexRef.current = i; }}
+                onDrop={() => reorderChords(i)}
                 key={`${ch.name}_${ch.selectedPosition}_${i}`}
                 id={`${ch.name}_${ch.selectedPosition}_${i}`}
               />
