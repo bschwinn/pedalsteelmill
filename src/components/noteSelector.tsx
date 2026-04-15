@@ -5,6 +5,7 @@ export type NoteSelectorProps = {
   value?: NoteName;
   onChange?: (note: NoteName) => void;
   onClick?: (note: NoteName) => void;
+  onDragStart?: (note: NoteName) => void;
   className?: string;
   orientation?: "horizontal" | "vertical";
   prefix?: string;
@@ -15,6 +16,7 @@ export const NoteSelector = ({
   value,
   onChange,
   onClick,
+  onDragStart,
   orientation = "horizontal",
   className = "",
   prefix = "",
@@ -26,6 +28,11 @@ export const NoteSelector = ({
         <button
           key={`notesel_${note.name}`}
           className={value?.name === note.name ? "selected" : ""}
+          draggable={!!onDragStart}
+          onDragStart={onDragStart ? (e) => {
+            e.dataTransfer.effectAllowed = "copy";
+            onDragStart(note);
+          } : undefined}
           onClick={() => {
             onChange?.(note);
             onClick?.(note);

@@ -22,7 +22,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-grow: 1;
+  flex-wrap: wrap;
   gap: 24px;
+  width: calc(100% - 216px); /* 216px = controls width/padding + list gap */
 }
 
 .chord-panel-list-empty {

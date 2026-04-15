@@ -26,20 +26,25 @@ export const ChordChart = ({ chordRef }: ChordChartProps) => {
   const [tonality, setTonality] = useState<Tonalities>("major");
   const [chords, setChords] = useState<PositionedChord[]>([]);
   const dragIndexRef = useRef<number | null>(null);
+  const draggedNoteRef = useRef<NoteName | null>(null);
 
-  const addChord = (note: NoteName) => {
+  const buildPositionedChord = (note: NoteName) => {
     const selectedChord =
       tonality === "major"
         ? chordRef.majorChords[note.name]
         : chordRef.minorChords[note.name];
+    return { ...selectedChord, selectedPosition: selectedChord.positions[0] };
+  };
+
+  const addChord = (note: NoteName) => {
+    setChords((prev) => [...prev, buildPositionedChord(note)]);
+  };
+
+  const insertChord = (note: NoteName, index: number) => {
     setChords((prev) => {
-      return [
-        ...prev,
-        {
-          ...selectedChord,
-          selectedPosition: selectedChord.positions[0],
-        },
-      ];
+      const next = [...prev];
+      next.splice(index, 0, buildPositionedChord(note));
+      return next;
     });
   };
 
@@ -93,13 +98,24 @@ export const ChordChart = ({ chordRef }: ChordChartProps) => {
             <NoteSelector
               scale={chordRef.chordNames}
               onClick={(note: NoteName) => addChord(note)}
+              onDragStart={(note: NoteName) => { draggedNoteRef.current = note; }}
               orientation={orientation}
               className="twoby"
               prefix="+ "
             />
           </div>
         </div>
-        <div className="chord-panel-list">
+        <div
+          className="chord-panel-list"
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => {
+            e.preventDefault();
+            if (draggedNoteRef.current) {
+              addChord(draggedNoteRef.current);
+              draggedNoteRef.current = null;
+            }
+          }}
+        >
           {chords.length === 0 && (
             <div className="chord-panel-list-empty">
               Drag notes from above to assemble a chord progression.
@@ -114,7 +130,14 @@ export const ChordChart = ({ chordRef }: ChordChartProps) => {
                 onChangePosition={(newPos: number) => changePosition(i, newPos)}
                 onChangeTonality={(newTonality: Tonalities) => changeTonality(i, newTonality)}
                 onDragStart={() => { dragIndexRef.current = i; }}
-                onDrop={() => reorderChords(i)}
+                onDrop={() => {
+                  if (draggedNoteRef.current) {
+                    insertChord(draggedNoteRef.current, i);
+                    draggedNoteRef.current = null;
+                  } else {
+                    reorderChords(i);
+                  }
+                }}
                 key={`${ch.name}_${ch.selectedPosition}_${i}`}
                 id={`${ch.name}_${ch.selectedPosition}_${i}`}
               />

@@ -38,12 +38,17 @@ export const ChordChartCard = ({
       }}
       onDragOver={(e) => {
         e.preventDefault();
-        e.dataTransfer.dropEffect = "move";
+        e.dataTransfer.dropEffect = e.dataTransfer.effectAllowed === "copy" ? "copy" : "move";
         setIsDragOver(true);
       }}
-      onDragLeave={() => setIsDragOver(false)}
+      onDragLeave={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+          setIsDragOver(false);
+        }
+      }}
       onDrop={(e) => {
         e.preventDefault();
+        e.stopPropagation();
         setIsDragOver(false);
         onDrop?.();
       }}
