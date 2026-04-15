@@ -118,7 +118,7 @@ export class ChordReference {
 
   private createE9MajorChord(scale: NoteName[], noteOffset: number): Chord {
     const noteInfo = scale[noteOffset];
-    const positions = [];
+    const positions: ChordPosition[] = [];
     positions[positions.length] = this.createE9ChordPosition(
       scale,
       noteInfo.name,
@@ -130,70 +130,31 @@ export class ChordReference {
     positions[positions.length] = this.createE9ChordPosition(
       scale,
       noteInfo.name,
-      3 + noteOffset,
+      this.wrapChord(3 + noteOffset),
       ["A"],
       ["LKL"],
       [0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
     );
-
-    if (noteOffset > 6) {
-      positions.unshift(
-        this.createE9ChordPosition(
-          scale,
-          noteInfo.name,
-          7 + noteOffset - 12,
-          ["A", "B"],
-          [],
-          [0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
-        ),
-      );
-      positions.unshift(
-        this.createE9ChordPosition(
-          scale,
-          noteInfo.name,
-          5 + noteOffset - 12,
-          [],
-          ["LKR", "RKL"],
-          [0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
-        ),
-      );
-    } else if (noteOffset > 4) {
-      positions[positions.length] = this.createE9ChordPosition(
-        scale,
-        noteInfo.name,
-        5 + noteOffset,
-        [],
-        ["LKR", "RKL"],
-        [0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
-      );
-      positions.unshift(
-        this.createE9ChordPosition(
-          scale,
-          noteInfo.name,
-          7 + noteOffset - 12,
-          ["A", "B"],
-          [],
-          [0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
-        ),
-      );
-    } else {
-      positions[positions.length] = this.createE9ChordPosition(
-        scale,
-        noteInfo.name,
-        5 + noteOffset,
-        [],
-        ["LKR", "RKL"],
-        [0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
-      );
-      positions[positions.length] = this.createE9ChordPosition(
-        scale,
-        noteInfo.name,
-        7 + noteOffset,
-        ["A", "B"],
-        [],
-        [0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
-      );
-    }
+    positions[positions.length] = this.createE9ChordPosition(
+      scale,
+      noteInfo.name,
+      this.wrapChord(5 + noteOffset),
+      [],
+      ["LKR", "RKL"],
+      [0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
+    );
+    positions[positions.length] = this.createE9ChordPosition(
+      scale,
+      noteInfo.name,
+      this.wrapChord(7 + noteOffset),
+      ["A", "B"],
+      [],
+      [0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
+    );
+    
+    positions.sort((a: ChordPosition, b: ChordPosition) => {
+      return a.fret - b.fret;
+    });
 
     return {
       name: noteInfo.name,
@@ -205,7 +166,7 @@ export class ChordReference {
 
   private createE9MinorChord(scale: NoteName[], noteOffset: number): Chord {
     const noteInfo = scale[noteOffset];
-    const positions = [];
+    const positions: ChordPosition[] = [];
     positions[positions.length] = this.createE9ChordPosition(
       scale,
       noteInfo.name,
@@ -217,69 +178,31 @@ export class ChordReference {
     positions[positions.length] = this.createE9ChordPosition(
       scale,
       noteInfo.name,
-      3 + noteOffset,
+      this.wrapChord(3 + noteOffset),
       ["A"],
       [],
       [0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
     );
-    if (noteOffset > 4) {
-      positions.unshift(
-        this.createE9ChordPosition(
-          scale,
-          noteInfo.name,
-          10 + noteOffset - 12,
-          ["B", "C"],
-          [],
-          [0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
-        ),
-      );
-      positions.unshift(
-        this.createE9ChordPosition(
-          scale,
-          noteInfo.name,
-          7 + noteOffset - 12,
-          ["A", "B"],
-          ["LKV"],
-          [0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
-        ),
-      );
-    } else if (noteOffset > 1) {
-      positions[positions.length] = this.createE9ChordPosition(
-        scale,
-        noteInfo.name,
-        7 + noteOffset,
-        ["A", "B"],
-        ["LKV"],
-        [0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
-      );
-      positions.unshift(
-        this.createE9ChordPosition(
-          scale,
-          noteInfo.name,
-          10 + noteOffset - 12,
-          ["B", "C"],
-          [],
-          [0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
-        ),
-      );
-    } else {
-      positions[positions.length] = this.createE9ChordPosition(
-        scale,
-        noteInfo.name,
-        7 + noteOffset,
-        ["A", "B"],
-        ["LKV"],
-        [0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
-      );
-      positions[positions.length] = this.createE9ChordPosition(
-        scale,
-        noteInfo.name,
-        10 + noteOffset,
-        ["B", "C"],
-        [],
-        [0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
-      );
-    }
+    positions[positions.length] = this.createE9ChordPosition(
+      scale,
+      noteInfo.name,
+      this.wrapChord(7 + noteOffset),
+      ["A", "B"],
+      ["LKV"],
+      [0, 0, 1, 1, 1, 1, 0, 1, 0, 1],
+    );
+    positions[positions.length] = this.createE9ChordPosition(
+      scale,
+      noteInfo.name,
+      this.wrapChord(10 + noteOffset),
+      ["B", "C"],
+      [],
+      [0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
+    );
+
+    positions.sort((a: ChordPosition, b: ChordPosition) => {
+      return a.fret - b.fret;
+    });
 
     return {
       name: noteInfo.name,
@@ -393,5 +316,9 @@ export class ChordReference {
       tonality: "minor" as const,
       positions: [],
     };
+  }
+
+  private wrapChord(offset: number) {
+    return offset % 12;
   }
 }
